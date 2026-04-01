@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #06060e;
+  --bg-card: #0d0d1a;
+  --bg-hover: #13132a;
+  --accent-red: #c0392b;
+  --accent-purple: #8e44ad;
+  --text: #e0ddd8;
+  --text-dim: #7a7a8e;
+  --text-muted: #44445a;
+  --border: rgba(192,57,43,0.25);
+  --glass: rgba(13,13,26,0.75);
+  --layer1: #e74c3c;
+  --layer2: #9b59b6;
+  --layer3: #2980b9;
+  --layer4: #27ae60;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body {
+  font-family: 'Instrument Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+code, .mono { font-family: 'JetBrains Mono', monospace; }
