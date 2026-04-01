@@ -1,0 +1,511 @@
+/* =============================================================
+   expanded.css — Supplementary styles for BootSeq and shared
+   utility classes (code blocks, tags, detail panels, etc.)
+   ============================================================= */
+
+/* ===================== CODE BLOCK ===================== */
+.code-block {
+  background: #0a0a1a;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+  overflow-x: auto;
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+}
+.code-block::-webkit-scrollbar { height: 4px; }
+.code-block::-webkit-scrollbar-track { background: transparent; }
+.code-block::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.code-keyword { color: #c792ea; font-weight: 500; }
+.code-string  { color: #c3e88d; }
+.code-comment { color: #676e95; font-style: italic; }
+
+/* ===================== DETAIL PANEL ===================== */
+.detail-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: rgba(6, 6, 14, 0.6);
+  border: 1px solid rgba(192, 57, 43, 0.12);
+  border-radius: 10px;
+}
+.detail-description {
+  font-size: 0.83rem;
+  color: var(--text-dim);
+  line-height: 1.72;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+/* ===================== TAGS ===================== */
+.tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.tag-primary {
+  background: rgba(192, 57, 43, 0.18);
+  color: var(--accent-red);
+  border: 1px solid rgba(192, 57, 43, 0.35);
+}
+.tag-secondary {
+  background: rgba(142, 68, 173, 0.15);
+  color: var(--accent-purple);
+  border: 1px solid rgba(142, 68, 173, 0.3);
+}
+
+/* ===================== FILE PATH TAG ===================== */
+.file-path {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent-red);
+  background: rgba(192, 57, 43, 0.1);
+  border: 1px solid rgba(192, 57, 43, 0.25);
+  padding: 2px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+
+/* ===================== FLOW CONNECTOR (generic) ===================== */
+.flow-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+.flow-connector .flow-arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--accent-red);
+}
+
+/* ===================== TAB CONTENT DETAIL ===================== */
+.tab-content-detail {
+  padding: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 0 0 12px 12px;
+  border-top: none;
+}
+
+/* ===================== TIMELINE NODE LARGE ===================== */
+.timeline-node-large {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background: var(--bg-card);
+  border: 2px solid var(--accent-red);
+  color: var(--accent-red);
+  flex-shrink: 0;
+}
+
+/* ===================== TIMELINE CONNECTOR ===================== */
+.timeline-connector {
+  width: 2px;
+  background: linear-gradient(180deg, var(--accent-red), var(--accent-purple));
+  flex-shrink: 0;
+}
+
+/* ===================== CARD EXPANDABLE ===================== */
+.card-expandable {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.card-expandable:hover {
+  border-color: var(--accent-purple);
+}
+.card-expanded {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 24px rgba(192, 57, 43, 0.12);
+}
+
+/* ===================== HIGHLIGHT CARD ===================== */
+.highlight-card {
+  background: linear-gradient(135deg, rgba(192, 57, 43, 0.08), rgba(142, 68, 173, 0.08));
+  border: 1px solid rgba(192, 57, 43, 0.3);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.highlight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-red), var(--accent-purple));
+}
+
+/* ===================== GRID 2-COL ===================== */
+.grid-2col {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (max-width: 700px) {
+  .grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =============================================================
+   BOOT SEQUENCE — BootSeq.tsx specific styles
+   ============================================================= */
+
+/* --- Timeline container --- */
+.bootseq-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding-top: 8px;
+}
+
+/* --- Step wrapper: alternating left / right --- */
+.bootseq-step-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bootseq-step-wrapper.bootseq-odd .bootseq-node {
+  margin-right: auto;
+  margin-left: 0;
+}
+.bootseq-step-wrapper.bootseq-even .bootseq-node {
+  margin-left: auto;
+  margin-right: 0;
+}
+.bootseq-step-wrapper.bootseq-center .bootseq-summary {
+  margin: 0 auto;
+}
+
+/* --- Connector between steps --- */
+.bootseq-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0;
+}
+.bootseq-connector-line {
+  width: 2px;
+  height: 36px;
+  background: linear-gradient(
+    180deg,
+    rgba(192, 57, 43, 0.5),
+    rgba(142, 68, 173, 0.5)
+  );
+}
+.bootseq-connector-arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid rgba(142, 68, 173, 0.5);
+}
+
+/* --- Node card --- */
+.bootseq-node {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  max-width: 720px;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.bootseq-node:hover {
+  border-color: var(--accent-red);
+  box-shadow: 0 4px 32px rgba(192, 57, 43, 0.1);
+}
+
+/* --- Step number circle --- */
+.bootseq-circle {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(135deg, rgba(192, 57, 43, 0.15), rgba(142, 68, 173, 0.15));
+  border: 2px solid var(--accent-red);
+  gap: 1px;
+}
+.bootseq-circle-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+.bootseq-circle-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  line-height: 1;
+}
+
+/* --- Content area --- */
+.bootseq-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* --- Header row: title + file-path tag + timing tag --- */
+.bootseq-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+.bootseq-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* --- Numbered bullet in description --- */
+.bootseq-bullet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  background: rgba(192, 57, 43, 0.15);
+  color: var(--accent-red);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* --- Code path footer in each node --- */
+.bootseq-codepath {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: #08081a;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  border: 1px solid rgba(192, 57, 43, 0.1);
+}
+
+/* =============================================================
+   BOOT SUMMARY — "启动完成" final node
+   ============================================================= */
+.bootseq-summary {
+  max-width: 780px;
+  width: 100%;
+}
+
+.bootseq-summary-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.bootseq-summary-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.bootseq-summary-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.bootseq-summary-desc {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  line-height: 1.72;
+  margin-bottom: 24px;
+}
+.bootseq-summary-desc strong {
+  color: var(--accent-red);
+  font-weight: 600;
+}
+
+/* --- Timing chart --- */
+.bootseq-timing-chart {
+  margin-bottom: 24px;
+}
+.bootseq-timing-heading {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.bootseq-timing-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.bootseq-timing-label {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  min-width: 160px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.bootseq-timing-track {
+  flex: 1;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.bootseq-timing-fill {
+  height: 100%;
+  border-radius: 5px;
+  min-width: 2px;
+}
+.bootseq-timing-ms {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  min-width: 48px;
+  text-align: right;
+}
+
+/* --- Stacked total bar --- */
+.bootseq-total-bar {
+  margin-top: 4px;
+}
+.bootseq-total-segments {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  gap: 1px;
+}
+.bootseq-total-seg {
+  height: 100%;
+  min-width: 2px;
+  border-radius: 2px;
+}
+.bootseq-total-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+.bootseq-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.bootseq-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* =============================================================
+   RESPONSIVE — mobile: all steps centered, no alternating
+   ============================================================= */
+@media (max-width: 860px) {
+  .bootseq-step-wrapper.bootseq-odd .bootseq-node,
+  .bootseq-step-wrapper.bootseq-even .bootseq-node {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .bootseq-node {
+    max-width: 100%;
+  }
+  .bootseq-timing-label {
+    min-width: 100px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .bootseq-node {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 16px;
+    gap: 14px;
+  }
+  .bootseq-header {
+    justify-content: center;
+  }
+  .detail-description {
+    text-align: left;
+  }
+  .bootseq-codepath {
+    text-align: left;
+  }
+  .bootseq-timing-row {
+    flex-wrap: wrap;
+  }
+  .bootseq-timing-label {
+    min-width: auto;
+    text-align: left;
+    width: 100%;
+  }
+  .bootseq-summary {
+    padding: 20px 16px;
+  }
+  .bootseq-summary-header {
+    justify-content: center;
+    text-align: center;
+  }
+  .bootseq-total-legend {
+    justify-content: center;
+  }
+}

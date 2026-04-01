@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
+import './expanded.css'
 import Hero from './sections/Hero'
 import TechStack from './sections/TechStack'
 import Architecture from './sections/Architecture'
