@@ -15,7 +15,7 @@ interface TechItem {
 
 const stack: TechItem[] = [
   {
-    icon: '\u26A1',
+    icon: '⚡',
     cat: '运行时',
     tech: 'Bun',
     color: '#3b82f6',
@@ -49,7 +49,7 @@ const stack: TechItem[] = [
     files: ['tsconfig.json', 'src/Tool.ts'],
   },
   {
-    icon: '\u25FB',
+    icon: '◻',
     cat: '终端 UI',
     tech: 'React + Ink',
     color: '#06b6d4',
@@ -66,7 +66,7 @@ const stack: TechItem[] = [
     files: ['src/components/', 'src/screens/'],
   },
   {
-    icon: '\u25B6',
+    icon: '▶',
     cat: 'CLI 框架',
     tech: 'Commander.js',
     color: '#4f46e5',
@@ -83,14 +83,14 @@ const stack: TechItem[] = [
     files: ['src/cli.ts', 'src/commands/'],
   },
   {
-    icon: '\u2713',
+    icon: '✓',
     cat: 'Schema 验证',
     tech: 'Zod v4',
     color: '#059669',
     lightBg: '#ecfdf5',
     border: '#a7f3d0',
     description:
-      'Zod 是 Claude Code 中运行时数据验证的核心库。它用于验证 Anthropic API 的响应体结构、工具调用的参数格式、用户配置文件的合法性，以及 MCP 协议消息的完整性。项目从 Zod v3 升级到了 v4，采用了新的 schema 语法。Zod 的一大优势是能从 schema 定义中自动推导 TypeScript 类型（z.infer），实现了 \"Single Source of Truth\"——一套 schema 同时服务于运行时校验和编译期类型检查。',
+      'Zod 是 Claude Code 中运行时数据验证的核心库。它用于验证 Anthropic API 的响应体结构、工具调用的参数格式、用户配置文件的合法性，以及 MCP 协议消息的完整性。项目从 Zod v3 升级到了 v4，采用了新的 schema 语法。Zod 的一大优势是能从 schema 定义中自动推导 TypeScript 类型（z.infer），实现了 "Single Source of Truth"——一套 schema 同时服务于运行时校验和编译期类型检查。',
     features: [
       '运行时类型校验，捕获 API 响应异常',
       'z.infer 自动推导 TypeScript 类型',
@@ -100,7 +100,7 @@ const stack: TechItem[] = [
     files: ['src/schemas/', 'src/Tool.ts'],
   },
   {
-    icon: '\u2295',
+    icon: '⊕',
     cat: '代码搜索',
     tech: 'ripgrep (rg)',
     color: '#d97706',
@@ -117,7 +117,7 @@ const stack: TechItem[] = [
     files: ['src/tools/GrepTool.ts'],
   },
   {
-    icon: '\u21CC',
+    icon: '⇌',
     cat: '协议集成',
     tech: 'MCP SDK',
     color: '#dc2626',
@@ -134,7 +134,7 @@ const stack: TechItem[] = [
     files: ['src/services/mcpClient.ts'],
   },
   {
-    icon: '\u25C8',
+    icon: '◈',
     cat: 'AI API',
     tech: 'Anthropic SDK',
     color: '#7c3aed',
@@ -151,7 +151,7 @@ const stack: TechItem[] = [
     files: ['src/services/claude.ts', 'src/query.ts'],
   },
   {
-    icon: '\u2299',
+    icon: '⊙',
     cat: '可观测性',
     tech: 'OpenTelemetry',
     color: '#06b6d4',
@@ -168,7 +168,7 @@ const stack: TechItem[] = [
     files: ['src/services/telemetry.ts'],
   },
   {
-    icon: '\u2691',
+    icon: '⚑',
     cat: '功能开关',
     tech: 'GrowthBook',
     color: '#d97706',
@@ -185,7 +185,7 @@ const stack: TechItem[] = [
     files: ['src/services/featureFlags.ts'],
   },
   {
-    icon: '\u2A01',
+    icon: '⨁',
     cat: '认证授权',
     tech: 'OAuth 2.0 + JWT',
     color: '#059669',
