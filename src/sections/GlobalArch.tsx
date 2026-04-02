@@ -111,9 +111,9 @@ function Tooltip({
 /* ================================================================== */
 
 const TAB_ITEMS = [
-  { key: "panorama", label: "\u7cfb\u7edf\u5168\u666f\u67b6\u6784", icon: "\ud83c\udfd7\ufe0f" },
-  { key: "dataflow", label: "\u6570\u636e\u6d41\u5168\u666f", icon: "\ud83d\udd04" },
-  { key: "deps", label: "\u6a21\u5757\u4f9d\u8d56\u5173\u7cfb", icon: "\ud83d\udd78\ufe0f" },
+  { key: "panorama", label: "系统全景架构", icon: "🏗️" },
+  { key: "dataflow", label: "数据流全景", icon: "🔄" },
+  { key: "deps", label: "模块依赖关系", icon: "🕸️" },
 ];
 
 function TabBar({
@@ -193,7 +193,7 @@ interface LayerDef {
 const PANORAMA_LAYERS: LayerDef[] = [
   {
     id: "ui",
-    label: "\u7528\u6237\u4ea4\u4e92\u5c42",
+    label: "用户交互层",
     labelEn: "User Interface",
     color: C.blue,
     bg: C.blueBg,
@@ -201,29 +201,29 @@ const PANORAMA_LAYERS: LayerDef[] = [
     components: [
       {
         name: "Terminal (REPL)",
-        icon: "\ud83d\udcbb",
-        desc: "\u4ea4\u4e92\u5f0f\u7ec8\u7aef\uff0c\u57fa\u4e8e React+Ink \u6e32\u67d3\uff0c\u652f\u6301 Vim \u6a21\u5f0f\u3001Tab \u8865\u5168\u3001\u8bed\u6cd5\u9ad8\u4eae",
+        icon: "💻",
+        desc: "交互式终端，基于 React+Ink 渲染，支持 Vim 模式、Tab 补全、语法高亮",
       },
       {
         name: "VS Code Extension",
-        icon: "\ud83d\udd2e",
-        desc: "VS Code \u96c6\u6210\u6269\u5c55\uff0c\u901a\u8fc7 IPC \u4e0e\u6838\u5fc3\u5f15\u64ce\u901a\u4fe1\uff0c\u63d0\u4f9b\u4fa7\u8fb9\u680f Chat \u9762\u677f",
+        icon: "🔮",
+        desc: "VS Code 集成扩展，通过 IPC 与核心引擎通信，提供侧边栏 Chat 面板",
       },
       {
         name: "JetBrains Plugin",
-        icon: "\ud83e\udde9",
-        desc: "JetBrains IDE \u63d2\u4ef6\uff0c\u5d4c\u5165 Claude Code \u529f\u80fd\u5230 IntelliJ \u7cfb\u5217 IDE",
+        icon: "🧩",
+        desc: "JetBrains IDE 插件，嵌入 Claude Code 功能到 IntelliJ 系列 IDE",
       },
       {
         name: "CI/CD (Headless)",
-        icon: "\u26a1",
-        desc: "\u65e0\u5934\u6a21\u5f0f\u7528\u4e8e CI/CD \u7ba1\u9053\uff0c\u901a\u8fc7 --print \u53c2\u6570\u5355\u6b21\u6267\u884c\uff0c\u9000\u51fa\u7801\u4f20\u9012\u7ed3\u679c",
+        icon: "⚡",
+        desc: "无头模式用于 CI/CD 管道，通过 --print 参数单次执行，退出码传递结果",
       },
     ],
   },
   {
     id: "core",
-    label: "\u6838\u5fc3\u5f15\u64ce\u5c42",
+    label: "核心引擎层",
     labelEn: "Core Engine",
     color: C.purple,
     bg: C.purpleBg,
@@ -231,31 +231,31 @@ const PANORAMA_LAYERS: LayerDef[] = [
     components: [
       {
         name: "CLI Parser",
-        icon: "\ud83d\udccb",
-        desc: "Commander.js \u89e3\u6790 30+ CLI \u53c2\u6570\uff1a--model, --permission-mode, --allowedTools \u7b49",
+        icon: "📋",
+        desc: "Commander.js 解析 30+ CLI 参数：--model, --permission-mode, --allowedTools 等",
       },
       {
         name: "REPL Engine",
-        icon: "\ud83d\udd01",
-        desc: "React+Ink \u9a71\u52a8\u7684\u8bfb\u53d6-\u6c42\u503c-\u8f93\u51fa\u5faa\u73af\uff0c\u7ba1\u7406\u7528\u6237\u8f93\u5165\u2192AI\u54cd\u5e94\u2192\u5de5\u5177\u6267\u884c\u6d41\u7a0b",
+        icon: "🔁",
+        desc: "React+Ink 驱动的读取-求值-输出循环，管理用户输入→AI响应→工具执行流程",
       },
       {
         name: "Command Router",
-        icon: "\ud83d\uddc2\ufe0f",
-        desc: "80+ slash \u547d\u4ee4\u7684\u8def\u7531\u5206\u53d1\u5668\uff0c\u652f\u6301\u524d\u7f00\u5339\u914d\u3001\u53c2\u6570\u89e3\u6790\u548c Tab \u8865\u5168",
+        icon: "🗂️",
+        desc: "80+ slash 命令的路由分发器，支持前缀匹配、参数解析和 Tab 补全",
       },
     ],
     extras: [
       {
         label: "Query Engine (query.ts + QueryEngine.ts)",
-        desc: "\u6838\u5fc3\u67e5\u8be2\u5f15\u64ce\uff1a\u6d88\u606f\u6784\u5efa \u2192 API\u8c03\u7528 \u2192 \u6d41\u5f0f\u54cd\u5e94 \u2192 \u5de5\u5177\u7f16\u6392 \u2192 \u5faa\u73af\u8fed\u4ee3\uff0c\u9a71\u52a8\u6574\u4e2a AI \u4ea4\u4e92\u5faa\u73af",
+        desc: "核心查询引擎：消息构建 → API调用 → 流式响应 → 工具编排 → 循环迭代，驱动整个 AI 交互循环",
         color: C.purple,
       },
     ],
   },
   {
     id: "tools",
-    label: "\u5de5\u5177\u6267\u884c\u5c42",
+    label: "工具执行层",
     labelEn: "Tool Execution",
     color: C.amber,
     bg: C.amberBg,
@@ -263,46 +263,46 @@ const PANORAMA_LAYERS: LayerDef[] = [
     components: [
       {
         name: "File Tools",
-        icon: "\ud83d\udcc4",
-        desc: "Read/Write/Edit/Glob/Grep \u6587\u4ef6\u64cd\u4f5c\u5de5\u5177\u96c6\uff0c\u652f\u6301 .gitignore \u611f\u77e5",
+        icon: "📄",
+        desc: "Read/Write/Edit/Glob/Grep 文件操作工具集，支持 .gitignore 感知",
       },
       {
         name: "Search Tools",
-        icon: "\ud83d\udd0d",
-        desc: "GrepTool(ripgrep) + GlobTool(fast-glob) + FindTool \u4e09\u4ef6\u5957",
+        icon: "🔍",
+        desc: "GrepTool(ripgrep) + GlobTool(fast-glob) + FindTool 三件套",
       },
       {
         name: "Bash Tool",
-        icon: "\ud83d\udda5\ufe0f",
-        desc: "\u9694\u79bb Shell \u73af\u5883\u6267\u884c\u547d\u4ee4\uff0c120s \u8d85\u65f6\uff0cstdout/stderr \u5206\u79bb",
+        icon: "🖥️",
+        desc: "隔离 Shell 环境执行命令，120s 超时，stdout/stderr 分离",
       },
       {
         name: "Git Tools",
-        icon: "\ud83d\udcca",
-        desc: "GitLog/GitDiff/GitCommit/GitStatus \u5c01\u88c5\uff0cConventional Commits \u652f\u6301",
+        icon: "📊",
+        desc: "GitLog/GitDiff/GitCommit/GitStatus 封装，Conventional Commits 支持",
       },
       {
         name: "Web Tools",
-        icon: "\ud83c\udf10",
-        desc: "WebFetch \u6293\u53d6\u7f51\u9875\u5185\u5bb9\uff0cHTML\u2192Markdown \u8f6c\u6362\u8282\u7701 token",
+        icon: "🌐",
+        desc: "WebFetch 抓取网页内容，HTML→Markdown 转换节省 token",
       },
     ],
     extras: [
       {
         label: "Permission System (4-level modes)",
-        desc: "\u56db\u7ea7\u6743\u9650\u6a21\u5f0f: default \u2192 cautious \u2192 strict \u2192 bypass\uff0c\u63a7\u5236\u5de5\u5177\u6267\u884c\u7684\u5b89\u5168\u8fb9\u754c",
+        desc: "四级权限模式: default → cautious → strict → bypass，控制工具执行的安全边界",
         color: C.amber,
       },
       {
-        label: "MCP Dynamic Tools (\u5916\u90e8\u5de5\u5177\u6269\u5c55)",
-        desc: "\u901a\u8fc7 MCP \u534f\u8bae\u52a8\u6001\u53d1\u73b0\u548c\u52a0\u8f7d\u5916\u90e8\u5de5\u5177\uff0c\u652f\u6301 stdio/SSE \u4e24\u79cd\u4f20\u8f93",
+        label: "MCP Dynamic Tools (外部工具扩展)",
+        desc: "通过 MCP 协议动态发现和加载外部工具，支持 stdio/SSE 两种传输",
         color: C.cyan,
       },
     ],
   },
   {
     id: "infra",
-    label: "\u57fa\u7840\u670d\u52a1\u5c42",
+    label: "基础服务层",
     labelEn: "Infrastructure",
     color: C.green,
     bg: C.greenBg,
@@ -310,28 +310,28 @@ const PANORAMA_LAYERS: LayerDef[] = [
     components: [
       {
         name: "Anthropic SDK",
-        icon: "\ud83e\udd16",
-        desc: "\u5c01\u88c5 @anthropic-ai/sdk\uff0c\u7ba1\u7406 API Key \u8f6e\u6362\u3001\u8bf7\u6c42\u961f\u5217\u3001\u901f\u7387\u9650\u5236\u3001\u81ea\u52a8\u91cd\u8bd5",
+        icon: "🤖",
+        desc: "封装 @anthropic-ai/sdk，管理 API Key 轮换、请求队列、速率限制、自动重试",
       },
       {
         name: "MCP Client",
-        icon: "\ud83d\udd0c",
-        desc: "MCP \u5ba2\u6237\u7aef\uff0c\u7ba1\u7406\u591a\u670d\u52a1\u5668\u751f\u547d\u5468\u671f\uff1a\u542f\u52a8/\u53d1\u73b0/\u8c03\u7528/\u91cd\u8fde/\u5173\u95ed",
+        icon: "🔌",
+        desc: "MCP 客户端，管理多服务器生命周期：启动/发现/调用/重连/关闭",
       },
       {
         name: "Auth Service",
-        icon: "\ud83d\udd10",
-        desc: "OAuth 2.0 + PKCE \u8ba4\u8bc1\uff0cJWT \u89e3\u6790/\u5237\u65b0\uff0c\u591a\u79df\u6237 API Key \u7ba1\u7406",
+        icon: "🔐",
+        desc: "OAuth 2.0 + PKCE 认证，JWT 解析/刷新，多租户 API Key 管理",
       },
       {
         name: "Telemetry (OTel)",
-        icon: "\ud83d\udce1",
-        desc: "OpenTelemetry \u96c6\u6210\uff0cTracer/Meter/Logger\uff0c\u8ffd\u8e2a\u6bcf\u4e2a\u5de5\u5177\u8c03\u7528\u548c API \u8bf7\u6c42",
+        icon: "📡",
+        desc: "OpenTelemetry 集成，Tracer/Meter/Logger，追踪每个工具调用和 API 请求",
       },
       {
         name: "Config Svc",
-        icon: "\u2699\ufe0f",
-        desc: "3\u5c42\u914d\u7f6e\u5408\u5e76: \u5168\u5c40\u2192\u9879\u76ee\u2192\u4f1a\u8bdd\uff0c\u652f\u6301 GrowthBook Feature Flags \u8fdc\u7a0b\u914d\u7f6e",
+        icon: "⚙️",
+        desc: "3层配置合并: 全局→项目→会话，支持 GrowthBook Feature Flags 远程配置",
       },
     ],
   },
@@ -559,14 +559,14 @@ function SystemPanorama() {
           boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
         }}
       >
-        <strong style={{ color: C.text }}>\u67b6\u6784\u8bf4\u660e\uff1a</strong>
-        Claude Code \u91c7\u7528\u7ecf\u5178\u7684\u5206\u5c42\u67b6\u6784\uff08Layered Architecture\uff09\uff0c\u6bcf\u4e00\u5c42\u53ea\u4f9d\u8d56\u5176\u4e0b\u65b9\u7684\u5c42\u3002
-        \u7528\u6237\u4ea4\u4e92\u5c42\u901a\u8fc7 IPC/stdio \u4e0e\u6838\u5fc3\u5f15\u64ce\u901a\u4fe1\uff1b\u6838\u5fc3\u5f15\u64ce\u901a\u8fc7\u6807\u51c6\u5316\u63a5\u53e3\u8c03\u7528\u5de5\u5177\u5c42\uff1b
-        \u5de5\u5177\u5c42\u548c\u6838\u5fc3\u5c42\u5171\u540c\u4f9d\u8d56\u5e95\u90e8\u7684\u57fa\u7840\u670d\u52a1\u5c42\u63d0\u4f9b API \u901a\u4fe1\u3001\u8ba4\u8bc1\u3001\u914d\u7f6e\u548c\u9065\u6d4b\u80fd\u529b\u3002
-        \u8fd9\u79cd\u8bbe\u8ba1\u4f7f\u5f97\u66ff\u6362\u4efb\u4f55\u4e00\u5c42\uff08\u5982\u6dfb\u52a0\u65b0\u7684 IDE \u96c6\u6210\uff09\u4e0d\u4f1a\u5f71\u54cd\u5176\u4ed6\u5c42\u3002
+        <strong style={{ color: C.text }}>架构说明：</strong>
+        Claude Code 采用经典的分层架构（Layered Architecture），每一层只依赖其下方的层。
+        用户交互层通过 IPC/stdio 与核心引擎通信；核心引擎通过标准化接口调用工具层；
+        工具层和核心层共同依赖底部的基础服务层提供 API 通信、认证、配置和遥测能力。
+        这种设计使得替换任何一层（如添加新的 IDE 集成）不会影响其他层。
         <br />
         <span style={{ color: C.purple, fontFamily: FONT_MONO, fontSize: "0.72rem" }}>
-          &#10168; \u9f20\u6807\u60ac\u505c\u5404\u7ec4\u4ef6\u53ef\u67e5\u770b\u8be6\u7ec6\u63cf\u8ff0
+          &#10168; 鼠标悬停各组件可查看详细描述
         </span>
       </div>
     </div>
@@ -589,45 +589,45 @@ interface FlowNode {
 const FLOW_TOP: FlowNode[] = [
   {
     id: "input",
-    label: "\u7528\u6237\u8f93\u5165",
-    icon: "\u2328\ufe0f",
-    desc: "\u7ec8\u7aef/IDE \u4e2d\u8f93\u5165\u81ea\u7136\u8bed\u8a00\u6307\u4ee4\u6216 slash \u547d\u4ee4",
+    label: "用户输入",
+    icon: "⌨️",
+    desc: "终端/IDE 中输入自然语言指令或 slash 命令",
     color: C.blue,
   },
   {
     id: "cli",
-    label: "CLI \u89e3\u6790",
-    icon: "\ud83d\udccb",
-    desc: "Commander.js \u89e3\u6790\u53c2\u6570\uff0c\u533a\u5206 slash \u547d\u4ee4\u4e0e\u81ea\u7136\u8bed\u8a00",
+    label: "CLI 解析",
+    icon: "📋",
+    desc: "Commander.js 解析参数，区分 slash 命令与自然语言",
     color: C.blue,
   },
   {
     id: "router",
-    label: "\u547d\u4ee4\u8def\u7531",
-    icon: "\ud83d\uddc2\ufe0f",
-    desc: "commandRouter \u5206\u53d1\u5230\u5bf9\u5e94\u5904\u7406\u5668\u6216\u8fdb\u5165 AI \u5bf9\u8bdd\u6d41\u7a0b",
+    label: "命令路由",
+    icon: "🗂️",
+    desc: "commandRouter 分发到对应处理器或进入 AI 对话流程",
     color: C.blue,
   },
   {
     id: "query",
-    label: "\u67e5\u8be2\u5f15\u64ce",
-    icon: "\u26a1",
-    desc: "query.ts \u6838\u5fc3\u5faa\u73af: \u6784\u5efa\u6d88\u606f \u2192 \u8c03\u7528 API \u2192 \u89e3\u6790\u54cd\u5e94 \u2192 \u7f16\u6392\u5de5\u5177\u8c03\u7528",
+    label: "查询引擎",
+    icon: "⚡",
+    desc: "query.ts 核心循环: 构建消息 → 调用 API → 解析响应 → 编排工具调用",
     color: C.purple,
     highlight: true,
   },
   {
     id: "api",
-    label: "API \u8bf7\u6c42",
-    icon: "\ud83d\udce1",
-    desc: "Anthropic SDK \u6784\u5efa\u8bf7\u6c42\u4f53\uff0c\u9644\u52a0\u7cfb\u7edf\u63d0\u793a\u8bcd\u3001\u5de5\u5177\u5b9a\u4e49\u3001\u5bf9\u8bdd\u5386\u53f2",
+    label: "API 请求",
+    icon: "📡",
+    desc: "Anthropic SDK 构建请求体，附加系统提示词、工具定义、对话历史",
     color: C.purple,
   },
   {
     id: "claude",
     label: "Claude API",
-    icon: "\ud83e\udd16",
-    desc: "Anthropic \u4e91\u7aef\u63a8\u7406\uff0c\u8fd4\u56de\u6587\u672c\u548c tool_use \u5757\u7684\u6d41\u5f0f SSE \u54cd\u5e94",
+    icon: "🤖",
+    desc: "Anthropic 云端推理，返回文本和 tool_use 块的流式 SSE 响应",
     color: C.green,
   },
 ];
@@ -635,45 +635,45 @@ const FLOW_TOP: FlowNode[] = [
 const FLOW_BOTTOM: FlowNode[] = [
   {
     id: "stream",
-    label: "\u6d41\u5f0f\u54cd\u5e94",
-    icon: "\ud83d\udce5",
-    desc: "SSE \u9010 chunk \u63a5\u6536\uff0c\u5b9e\u65f6\u89e3\u6790 content_block_delta \u548c tool_use \u4e8b\u4ef6",
+    label: "流式响应",
+    icon: "📥",
+    desc: "SSE 逐 chunk 接收，实时解析 content_block_delta 和 tool_use 事件",
     color: C.green,
   },
   {
     id: "perm",
-    label: "\u6743\u9650\u68c0\u67e5",
-    icon: "\ud83d\udd12",
-    desc: "\u68c0\u67e5\u5de5\u5177\u7684\u5b89\u5168\u5143\u6570\u636e(isDestructive/needsPermissions)\uff0c\u6309\u6a21\u5f0f\u51b3\u5b9a\u662f\u5426\u653e\u884c",
+    label: "权限检查",
+    icon: "🔒",
+    desc: "检查工具的安全元数据(isDestructive/needsPermissions)，按模式决定是否放行",
     color: C.red,
     highlight: true,
   },
   {
     id: "exec",
-    label: "\u5de5\u5177\u6267\u884c",
-    icon: "\ud83d\udd27",
-    desc: "Zod \u6821\u9a8c\u53c2\u6570 \u2192 \u8c03\u7528 tool.execute() \u2192 \u6355\u83b7 stdout/stderr \u2192 \u5c01\u88c5 tool_result",
+    label: "工具执行",
+    icon: "🔧",
+    desc: "Zod 校验参数 → 调用 tool.execute() → 捕获 stdout/stderr → 封装 tool_result",
     color: C.amber,
   },
   {
     id: "merge",
-    label: "\u7ed3\u679c\u6574\u5408",
-    icon: "\ud83d\udd00",
-    desc: "\u5c06 tool_result \u8ffd\u52a0\u5230\u6d88\u606f\u5386\u53f2\uff0c\u51b3\u5b9a\u662f\u5426\u7ee7\u7eed\u5faa\u73af\uff08\u6709 tool_use \u5219\u5faa\u73af\uff09",
+    label: "结果整合",
+    icon: "🔀",
+    desc: "将 tool_result 追加到消息历史，决定是否继续循环（有 tool_use 则循环）",
     color: C.amber,
   },
   {
     id: "render",
-    label: "\u6e32\u67d3\u8f93\u51fa",
-    icon: "\ud83c\udfa8",
-    desc: "React+Ink \u5b9e\u65f6\u6e32\u67d3 Markdown \u6587\u672c\u3001\u4ee3\u7801\u5757\u3001diff \u89c6\u56fe\u5230\u7ec8\u7aef",
+    label: "渲染输出",
+    icon: "🎨",
+    desc: "React+Ink 实时渲染 Markdown 文本、代码块、diff 视图到终端",
     color: C.blue,
   },
   {
     id: "output",
-    label: "\u6700\u7ec8\u8f93\u51fa",
-    icon: "\u2705",
-    desc: "\u7528\u6237\u770b\u5230\u683c\u5f0f\u5316\u7684 AI \u56de\u590d\uff0c\u5305\u542b\u6587\u672c\u3001\u4ee3\u7801\u53d8\u66f4\u3001\u5de5\u5177\u6267\u884c\u7ed3\u679c",
+    label: "最终输出",
+    icon: "✅",
+    desc: "用户看到格式化的 AI 回复，包含文本、代码变更、工具执行结果",
     color: C.blue,
   },
 ];
@@ -952,17 +952,17 @@ function DataFlowPanorama() {
           boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
         }}
       >
-        <strong style={{ color: C.text }}>\u6570\u636e\u6d41\u8bf4\u660e\uff1a</strong>
-        \u6bcf\u6761\u7528\u6237\u8bf7\u6c42\u7ecf\u8fc7 CLI \u89e3\u6790\u548c\u547d\u4ee4\u8def\u7531\u540e\u8fdb\u5165\u67e5\u8be2\u5f15\u64ce\uff08
-        <span style={{ color: C.purple }}>\u6838\u5fc3\u5faa\u73af</span>
-        \uff09\u3002\u67e5\u8be2\u5f15\u64ce\u6784\u5efa API \u8bf7\u6c42\u53d1\u9001\u5230 Claude\uff0cClaude \u8fd4\u56de\u6d41\u5f0f\u54cd\u5e94\u3002
-        \u5982\u679c\u54cd\u5e94\u4e2d\u5305\u542b tool_use \u5757\uff0c\u7cfb\u7edf\u5148\u6267\u884c
-        <span style={{ color: C.red }}> \u6743\u9650\u68c0\u67e5</span>
-        \uff0c\u518d\u8c03\u7528\u5bf9\u5e94\u5de5\u5177\uff0c\u5c06 tool_result \u8ffd\u52a0\u5230\u6d88\u606f\u5386\u53f2\u540e\u91cd\u65b0\u8fdb\u5165 API \u5faa\u73af\u3002
-        \u8fd9\u4e2a tool_use &#8594; tool_result \u7684\u5faa\u73af\u4f1a\u6301\u7eed\u5230 Claude \u8fd4\u56de\u7eaf\u6587\u672c\u56de\u590d\u4e3a\u6b62\u3002
+        <strong style={{ color: C.text }}>数据流说明：</strong>
+        每条用户请求经过 CLI 解析和命令路由后进入查询引擎（
+        <span style={{ color: C.purple }}>核心循环</span>
+        ）。查询引擎构建 API 请求发送到 Claude，Claude 返回流式响应。
+        如果响应中包含 tool_use 块，系统先执行
+        <span style={{ color: C.red }}> 权限检查</span>
+        ，再调用对应工具，将 tool_result 追加到消息历史后重新进入 API 循环。
+        这个 tool_use &#8594; tool_result 的循环会持续到 Claude 返回纯文本回复为止。
         <br />
         <span style={{ color: C.amber, fontFamily: FONT_MONO, fontSize: "0.72rem" }}>
-          &#10168; \u9ad8\u4eae\u8282\u70b9\u4e3a\u5173\u952e\u74f6\u9888\u70b9\uff0c\u60ac\u505c\u67e5\u770b\u8be6\u60c5
+          &#10168; 高亮节点为关键瓶颈点，悬停查看详情
         </span>
       </div>
     </div>
@@ -1046,7 +1046,7 @@ interface DepNode {
 
 const DEP_CENTER: DepNode = {
   name: "query.ts",
-  desc: "\u6838\u5fc3\u67e5\u8be2\u5f15\u64ce\nAI \u4ea4\u4e92\u5faa\u73af\u7684\u5fc3\u810f\n\u6d88\u606f\u6784\u5efa\u2192API\u8c03\u7528\u2192\u6d41\u5f0f\u54cd\u5e94\u2192\u5de5\u5177\u7f16\u6392",
+  desc: "核心查询引擎\nAI 交互循环的心脏\n消息构建→API调用→流式响应→工具编排",
   color: C.purple,
   borderColor: C.purpleBorder,
   bg: C.purpleBg,
@@ -1055,28 +1055,28 @@ const DEP_CENTER: DepNode = {
 const DEP_RING1: DepNode[] = [
   {
     name: "Tool.ts",
-    desc: "\u5de5\u5177\u57fa\u7c7b\uff0c40+ \u5de5\u5177\u7684\u7edf\u4e00\u63a5\u53e3\nZod Schema \u9a8c\u8bc1 + \u5b89\u5168\u5143\u6570\u636e\u58f0\u660e",
+    desc: "工具基类，40+ 工具的统一接口\nZod Schema 验证 + 安全元数据声明",
     color: C.amber,
     borderColor: C.amberBorder,
     bg: C.amberBg,
   },
   {
     name: "ConversationMgr",
-    desc: "\u5bf9\u8bdd\u5386\u53f2\u7ba1\u7406\u5668\n\u4e0a\u4e0b\u6587\u538b\u7f29(compact)\u3001\u6301\u4e45\u5316\u5b58\u50a8\u3001\u591a\u4f1a\u8bdd\u5207\u6362",
+    desc: "对话历史管理器\n上下文压缩(compact)、持久化存储、多会话切换",
     color: C.blue,
     borderColor: C.blueBorder,
     bg: C.blueBg,
   },
   {
     name: "ClaudeService",
-    desc: "Anthropic API \u5ba2\u6237\u7aef\n\u6d41\u5f0fSSE\u3001\u81ea\u52a8\u91cd\u8bd5\u3001Token\u8ba1\u6570",
+    desc: "Anthropic API 客户端\n流式SSE、自动重试、Token计数",
     color: C.green,
     borderColor: C.greenBorder,
     bg: C.greenBg,
   },
   {
     name: "PermissionSys",
-    desc: "\u56db\u7ea7\u6743\u9650\u7cfb\u7edf\ndefault\u2192cautious\u2192strict\u2192bypass",
+    desc: "四级权限系统\ndefault→cautious→strict→bypass",
     color: C.red,
     borderColor: C.redBorder,
     bg: C.redBg,
@@ -1086,14 +1086,14 @@ const DEP_RING1: DepNode[] = [
 const DEP_RING2: DepNode[] = [
   {
     name: "MCP Client",
-    desc: "\u5916\u90e8\u5de5\u5177\u534f\u8bae\u5ba2\u6237\u7aef\nstdio/SSE \u4f20\u8f93",
+    desc: "外部工具协议客户端\nstdio/SSE 传输",
     color: C.cyan,
     borderColor: C.cyanBorder,
     bg: C.cyanBg,
   },
   {
     name: "Auth Service",
-    desc: "OAuth2.0+PKCE\nJWT\u5237\u65b0\u3001API Key\u7ba1\u7406",
+    desc: "OAuth2.0+PKCE\nJWT刷新、API Key管理",
     color: C.red,
     borderColor: C.redBorder,
     bg: C.redBg,
@@ -1107,14 +1107,14 @@ const DEP_RING2: DepNode[] = [
   },
   {
     name: "Feature Flags",
-    desc: "GrowthBook SDK\n\u8fdc\u7a0b\u914d\u7f6e+\u7070\u5ea6\u53d1\u5e03",
+    desc: "GrowthBook SDK\n远程配置+灰度发布",
     color: C.amber,
     borderColor: C.amberBorder,
     bg: C.amberBg,
   },
   {
     name: "Config",
-    desc: "3\u5c42\u914d\u7f6e\u5408\u5e76\n\u5168\u5c40\u2192\u9879\u76ee\u2192\u4f1a\u8bdd",
+    desc: "3层配置合并\n全局→项目→会话",
     color: C.muted,
   },
 ];
@@ -1122,32 +1122,32 @@ const DEP_RING2: DepNode[] = [
 const DEP_RING3: DepNode[] = [
   {
     name: "React + Ink UI",
-    desc: "\u7ec8\u7aef UI \u6e32\u67d3\u5f15\u64ce\n\u57fa\u4e8e React \u7684 CLI \u754c\u9762",
+    desc: "终端 UI 渲染引擎\n基于 React 的 CLI 界面",
     color: C.blue,
   },
   {
     name: "Commander CLI",
-    desc: "CLI \u53c2\u6570\u89e3\u6790\u6846\u67b6\n30+ \u53c2\u6570\u5b9a\u4e49",
+    desc: "CLI 参数解析框架\n30+ 参数定义",
     color: C.blue,
   },
   {
     name: "GrowthBook SDK",
-    desc: "Feature Flag \u8fd0\u884c\u65f6\n\u5206\u7fa4+\u7070\u5ea6\u8ba1\u7b97",
+    desc: "Feature Flag 运行时\n分群+灰度计算",
     color: C.amber,
   },
   {
     name: "Anthropic SDK",
-    desc: "\u5b98\u65b9 API \u5ba2\u6237\u7aef\nmessages.create() \u5c01\u88c5",
+    desc: "官方 API 客户端\nmessages.create() 封装",
     color: C.green,
   },
   {
     name: "Zod v4",
-    desc: "Schema \u9a8c\u8bc1\u5e93\n\u5de5\u5177\u53c2\u6570\u6821\u9a8c",
+    desc: "Schema 验证库\n工具参数校验",
     color: C.teal,
   },
   {
     name: "fast-glob",
-    desc: "\u6587\u4ef6\u6a21\u5f0f\u5339\u914d\nGlobTool \u5e95\u5c42\u9a71\u52a8",
+    desc: "文件模式匹配\nGlobTool 底层驱动",
     color: C.muted,
   },
 ];
@@ -1388,9 +1388,9 @@ function ModuleDependencies() {
         ))}
 
         {[
-          { r: r1, label: "\u7b2c1\u5708: \u76f4\u63a5\u4f9d\u8d56", c: C.amber },
-          { r: r2, label: "\u7b2c2\u5708: \u670d\u52a1\u4f9d\u8d56", c: C.green },
-          { r: r3, label: "\u7b2c3\u5708: \u5916\u90e8SDK", c: C.muted },
+          { r: r1, label: "第1圈: 直接依赖", c: C.amber },
+          { r: r2, label: "第2圈: 服务依赖", c: C.green },
+          { r: r3, label: "第3圈: 外部SDK", c: C.muted },
         ].map((ring) => (
           <div
             key={ring.label}
@@ -1426,15 +1426,15 @@ function ModuleDependencies() {
           boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
         }}
       >
-        <strong style={{ color: C.text }}>\u4f9d\u8d56\u5173\u7cfb\u8bf4\u660e\uff1a</strong>
+        <strong style={{ color: C.text }}>依赖关系说明：</strong>
         <span style={{ color: C.purple, fontFamily: FONT_MONO }}>query.ts</span>{" "}
-        \u662f\u6574\u4e2a\u7cfb\u7edf\u7684\u5fc3\u810f\uff0c\u5b83\u76f4\u63a5\u4f9d\u8d56\u7b2c1\u5708\u7684\u56db\u4e2a\u6838\u5fc3\u6a21\u5757\uff1aTool.ts\uff08\u5de5\u5177\u8c03\u7528\uff09\u3001
-        ConversationMgr\uff08\u5bf9\u8bdd\u7ba1\u7406\uff09\u3001ClaudeService\uff08API\u901a\u4fe1\uff09\u3001PermissionSys\uff08\u6743\u9650\u63a7\u5236\uff09\u3002
-        \u7b2c2\u5708\u662f\u652f\u6491\u6027\u670d\u52a1\uff0c\u7b2c3\u5708\u662f\u5916\u90e8 SDK \u4f9d\u8d56\u3002
-        \u8d8a\u9760\u8fd1\u4e2d\u5fc3\u7684\u6a21\u5757\u53d8\u66f4\u5f71\u54cd\u8303\u56f4\u8d8a\u5927\uff0c\u4fee\u6539 query.ts \u9700\u8981\u6700\u4e3a\u8c28\u614e\u3002
+        是整个系统的心脏，它直接依赖第1圈的四个核心模块：Tool.ts（工具调用）、
+        ConversationMgr（对话管理）、ClaudeService（API通信）、PermissionSys（权限控制）。
+        第2圈是支撑性服务，第3圈是外部 SDK 依赖。
+        越靠近中心的模块变更影响范围越大，修改 query.ts 需要最为谨慎。
         <br />
         <span style={{ color: C.teal, fontFamily: FONT_MONO, fontSize: "0.72rem" }}>
-          &#10168; \u60ac\u505c\u8282\u70b9\u67e5\u770b\u6a21\u5757\u804c\u8d23\u63cf\u8ff0
+          &#10168; 悬停节点查看模块职责描述
         </span>
       </div>
     </div>
@@ -1501,7 +1501,7 @@ export default function GlobalArch() {
             margin: 0,
           }}
         >
-          {"\ud83d\uddfa\ufe0f \u5168\u5c40\u67b6\u6784\u603b\u89c8"}
+          {"🗺️ 全局架构总览"}
         </h2>
         <p
           style={{
@@ -1514,7 +1514,7 @@ export default function GlobalArch() {
             lineHeight: 1.7,
           }}
         >
-          \u4ece\u591a\u4e2a\u7ef4\u5ea6\u4fd1\u77b0 Claude Code 512,000+ \u884c\u4ee3\u7801\u7684\u5b8f\u89c2\u8bbe\u8ba1
+          从多个维度俑瞰 Claude Code 512,000+ 行代码的宏观设计
         </p>
       </motion.div>
 
@@ -1546,8 +1546,8 @@ export default function GlobalArch() {
         viewport={{ once: true }}
         transition={{ delay: 0.3 }}
       >
-        \u6570\u636e\u6765\u6e90\uff1aClaude Code CLI \u5f00\u6e90\u4ed3\u5e93\u7ed3\u6784\u5206\u6790 \u00b7 2025 &nbsp;|&nbsp;
-        \u67b6\u6784\u56fe\u57fa\u4e8e C4 Model Container \u7ea7\u522b\u8bbe\u8ba1
+        数据来源：Claude Code CLI 开源仓库结构分析 · 2025 &nbsp;|&nbsp;
+        架构图基于 C4 Model Container 级别设计
       </motion.p>
     </section>
   );
