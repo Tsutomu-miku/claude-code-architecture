@@ -1,29 +1,27 @@
 /* =============================================================
    expanded.css — Supplementary styles for BootSeq and shared
-   utility classes (code blocks, tags, detail panels, etc.)
+   utility classes — Light Professional Developer Theme
    ============================================================= */
 
-/* ===================== CODE BLOCK ===================== */
-.code-block {
-  background: #0a0a1a;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px 20px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  line-height: 1.7;
-  color: var(--text-dim);
-  overflow-x: auto;
-  white-space: pre;
-  -webkit-overflow-scrolling: touch;
+/* ===================== CODE BLOCK (expanded override) ===================== */
+/* Main code-block styles are in App.css; this provides supplementary overrides */
+.code-block code {
+  font-family: var(--font-mono);
+  background: none;
+  padding: 0;
+  font-size: inherit;
 }
-.code-block::-webkit-scrollbar { height: 4px; }
-.code-block::-webkit-scrollbar-track { background: transparent; }
-.code-block::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-.code-keyword { color: #c792ea; font-weight: 500; }
-.code-string  { color: #c3e88d; }
-.code-comment { color: #676e95; font-style: italic; }
+/* Inline code */
+.inline-code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--accent-indigo);
+}
 
 /* ===================== DETAIL PANEL ===================== */
 .detail-panel {
@@ -32,55 +30,25 @@
   gap: 10px;
   margin-top: 14px;
   padding: 16px 18px;
-  background: rgba(6, 6, 14, 0.6);
-  border: 1px solid rgba(192, 57, 43, 0.12);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
 }
 .detail-description {
-  font-size: 0.83rem;
-  color: var(--text-dim);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
   line-height: 1.72;
   display: flex;
   gap: 10px;
   align-items: baseline;
 }
 
-/* ===================== TAGS ===================== */
-.tag {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 500;
-  padding: 3px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
-  vertical-align: middle;
-}
-.tag-primary {
-  background: rgba(192, 57, 43, 0.18);
-  color: var(--accent-red);
-  border: 1px solid rgba(192, 57, 43, 0.35);
-}
-.tag-secondary {
-  background: rgba(142, 68, 173, 0.15);
-  color: var(--accent-purple);
-  border: 1px solid rgba(142, 68, 173, 0.3);
-}
-
-/* ===================== FILE PATH TAG ===================== */
-.file-path {
-  display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--accent-red);
-  background: rgba(192, 57, 43, 0.1);
-  border: 1px solid rgba(192, 57, 43, 0.25);
-  padding: 2px 10px;
-  border-radius: 4px;
-  letter-spacing: 0.02em;
-  vertical-align: middle;
-}
+/* ===================== TAGS (expanded variants) ===================== */
+.tag-indigo { color: #4f46e5; background: #eef2ff; border-color: #c7d2fe; }
+.tag-rose { color: #e11d48; background: #fff1f2; border-color: #fecdd3; }
+.tag-slate { color: #475569; background: #f8fafc; border-color: #e2e8f0; }
+.tag-teal { color: #0d9488; background: #f0fdfa; border-color: #99f6e4; }
+.tag-orange { color: #ea580c; background: #fff7ed; border-color: #fed7aa; }
 
 /* ===================== FLOW CONNECTOR (generic) ===================== */
 .flow-connector {
@@ -95,14 +63,14 @@
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 6px solid var(--accent-red);
+  border-top: 6px solid var(--accent-blue);
 }
 
 /* ===================== TAB CONTENT DETAIL ===================== */
 .tab-content-detail {
   padding: 24px;
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-color);
   border-radius: 0 0 12px 12px;
   border-top: none;
 }
@@ -116,43 +84,46 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 1.2rem;
   font-weight: 700;
   background: var(--bg-card);
-  border: 2px solid var(--accent-red);
-  color: var(--accent-red);
+  border: 2px solid var(--accent-blue);
+  color: var(--accent-blue);
   flex-shrink: 0;
+  box-shadow: var(--card-shadow);
 }
 
 /* ===================== TIMELINE CONNECTOR ===================== */
 .timeline-connector {
   width: 2px;
-  background: linear-gradient(180deg, var(--accent-red), var(--accent-purple));
+  background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
   flex-shrink: 0;
 }
 
 /* ===================== CARD EXPANDABLE ===================== */
 .card-expandable {
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   overflow: hidden;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: all 0.2s ease;
   cursor: pointer;
+  box-shadow: var(--card-shadow);
 }
 .card-expandable:hover {
-  border-color: var(--accent-purple);
+  border-color: var(--accent-blue);
+  box-shadow: var(--card-shadow-hover);
 }
 .card-expanded {
-  border-color: var(--accent-red);
-  box-shadow: 0 0 24px rgba(192, 57, 43, 0.12);
+  border-color: var(--accent-blue);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.1);
 }
 
 /* ===================== HIGHLIGHT CARD ===================== */
 .highlight-card {
-  background: linear-gradient(135deg, rgba(192, 57, 43, 0.08), rgba(142, 68, 173, 0.08));
-  border: 1px solid rgba(192, 57, 43, 0.3);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.04), rgba(124, 58, 237, 0.04));
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 32px;
   position: relative;
@@ -165,7 +136,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--accent-red), var(--accent-purple));
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
 }
 
 /* ===================== GRID 2-COL ===================== */
@@ -225,8 +196,8 @@
   height: 36px;
   background: linear-gradient(
     180deg,
-    rgba(192, 57, 43, 0.5),
-    rgba(142, 68, 173, 0.5)
+    rgba(59, 130, 246, 0.35),
+    rgba(124, 58, 237, 0.35)
   );
 }
 .bootseq-connector-arrow {
@@ -234,7 +205,7 @@
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 7px solid rgba(142, 68, 173, 0.5);
+  border-top: 7px solid rgba(124, 58, 237, 0.4);
 }
 
 /* --- Node card --- */
@@ -245,14 +216,15 @@
   max-width: 720px;
   width: 100%;
   background: var(--bg-card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 24px;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: all 0.2s ease;
+  box-shadow: var(--card-shadow);
 }
 .bootseq-node:hover {
-  border-color: var(--accent-red);
-  box-shadow: 0 4px 32px rgba(192, 57, 43, 0.1);
+  border-color: var(--accent-blue);
+  box-shadow: var(--card-shadow-hover);
 }
 
 /* --- Step number circle --- */
@@ -266,8 +238,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: linear-gradient(135deg, rgba(192, 57, 43, 0.15), rgba(142, 68, 173, 0.15));
-  border: 2px solid var(--accent-red);
+  background: rgba(59, 130, 246, 0.08);
+  border: 2px solid var(--accent-blue);
   gap: 1px;
 }
 .bootseq-circle-icon {
@@ -275,10 +247,10 @@
   line-height: 1;
 }
 .bootseq-circle-num {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.6rem;
   font-weight: 700;
-  color: var(--accent-red);
+  color: var(--accent-blue);
   line-height: 1;
 }
 
@@ -301,6 +273,7 @@
   font-weight: 700;
   letter-spacing: -0.01em;
   margin: 0;
+  color: var(--text-primary);
 }
 
 /* --- Numbered bullet in description --- */
@@ -312,9 +285,9 @@
   height: 20px;
   min-width: 20px;
   border-radius: 50%;
-  background: rgba(192, 57, 43, 0.15);
-  color: var(--accent-red);
-  font-family: 'JetBrains Mono', monospace;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-blue);
+  font-family: var(--font-mono);
   font-size: 0.65rem;
   font-weight: 600;
   line-height: 1;
@@ -324,16 +297,17 @@
 .bootseq-codepath {
   margin-top: 12px;
   padding: 8px 12px;
-  background: #08081a;
+  background: #1e293b;
   border-radius: 6px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   line-height: 1.5;
-  border: 1px solid rgba(192, 57, 43, 0.1);
+  color: #e2e8f0;
+  border: 1px solid #334155;
 }
 
 /* =============================================================
-   BOOT SUMMARY — "启动完成" final node
+   BOOT SUMMARY — final node
    ============================================================= */
 .bootseq-summary {
   max-width: 780px;
@@ -354,7 +328,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   color: #fff;
   font-size: 1.2rem;
   font-weight: 700;
@@ -364,15 +338,16 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 0;
+  color: var(--text-primary);
 }
 .bootseq-summary-desc {
-  font-size: 0.88rem;
-  color: var(--text-dim);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
   line-height: 1.72;
   margin-bottom: 24px;
 }
 .bootseq-summary-desc strong {
-  color: var(--accent-red);
+  color: var(--accent-blue);
   font-weight: 600;
 }
 
@@ -381,10 +356,10 @@
   margin-bottom: 24px;
 }
 .bootseq-timing-heading {
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 14px;
-  color: var(--text);
+  color: var(--text-primary);
 }
 .bootseq-timing-row {
   display: flex;
@@ -394,7 +369,7 @@
 }
 .bootseq-timing-label {
   font-size: 0.78rem;
-  color: var(--text-dim);
+  color: var(--text-secondary);
   min-width: 160px;
   text-align: right;
   flex-shrink: 0;
@@ -402,9 +377,10 @@
 .bootseq-timing-track {
   flex: 1;
   height: 10px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--bg-tertiary);
   border-radius: 5px;
   overflow: hidden;
+  border: 1px solid var(--border-color);
 }
 .bootseq-timing-fill {
   height: 100%;
@@ -412,7 +388,7 @@
   min-width: 2px;
 }
 .bootseq-timing-ms {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--text-muted);
   min-width: 48px;
@@ -429,6 +405,7 @@
   border-radius: 4px;
   overflow: hidden;
   gap: 1px;
+  background: var(--bg-tertiary);
 }
 .bootseq-total-seg {
   height: 100%;
@@ -445,7 +422,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 0.7rem;
+  font-size: 0.6875rem;
   color: var(--text-muted);
 }
 .bootseq-legend-dot {
@@ -453,6 +430,147 @@
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
+}
+
+/* ===================== HEATMAP / COLOR SCALES ===================== */
+.heatmap-low { background: #dbeafe; color: #1e40af; }
+.heatmap-med { background: #93c5fd; color: #1e3a8a; }
+.heatmap-high { background: #3b82f6; color: #ffffff; }
+.heatmap-max { background: #1d4ed8; color: #ffffff; }
+
+/* ===================== STATUS INDICATORS ===================== */
+.status-success {
+  color: #059669;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.status-warning {
+  color: #d97706;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.status-error {
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.status-info {
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* ===================== PROGRESS BAR ===================== */
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+  transition: width 0.5s ease;
+}
+
+/* ===================== TOOLTIP ===================== */
+.tooltip {
+  position: relative;
+}
+.tooltip-content {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #f1f5f9;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: #1e293b;
+}
+.tooltip:hover .tooltip-content {
+  opacity: 1;
+}
+
+/* ===================== DIVIDER ===================== */
+.divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 24px 0;
+}
+.divider-strong {
+  height: 1px;
+  background: var(--border-color-strong);
+  margin: 32px 0;
+}
+
+/* ===================== ICON BADGE ===================== */
+.icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--bg-tertiary);
+  color: var(--accent-blue);
+  font-size: 0.875rem;
+  flex-shrink: 0;
+  border: 1px solid var(--border-color);
+}
+.icon-badge-lg {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  font-size: 1.125rem;
+}
+
+/* ===================== SCROLLBAR GLOBAL ===================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color-strong);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 /* =============================================================
