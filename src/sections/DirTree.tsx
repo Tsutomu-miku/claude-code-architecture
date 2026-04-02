@@ -118,7 +118,7 @@ function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
           flexShrink: 0,
           userSelect: 'none',
         }}>
-          {hasKids ? (open ? '\u25BE' : '\u25B8') : '\u00B7'}
+          {hasKids ? (open ? '▾' : '▸') : '·'}
         </span>
         <span style={{
           fontSize: '0.85rem',
@@ -196,7 +196,7 @@ export default function DirTree() {
           margin: '12px 0 16px',
           fontFamily: "'Inter', system-ui, sans-serif",
         }}>
-          \u76EE\u5F55\u7ED3\u6784
+          目录结构
         </h2>
         <p style={{
           fontSize: '1rem',
@@ -206,7 +206,7 @@ export default function DirTree() {
           lineHeight: 1.6,
           fontFamily: "'Inter', system-ui, sans-serif",
         }}>
-          src/ \u4E0B\u7684\u6838\u5FC3\u6587\u4EF6\u4E0E\u5B50\u76EE\u5F55\u4E00\u89C8
+          src/ 下的核心文件与子目录一览
         </p>
       </div>
       <div style={{

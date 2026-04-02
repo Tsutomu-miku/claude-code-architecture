@@ -18,20 +18,20 @@ import BootSeq from './sections/BootSeq'
 import Footer from './sections/Footer'
 
 const navItems = [
-  { id: 'hero', label: '\u6982\u89C8' },
-  { id: 'tech', label: '\u6280\u672F\u680F' },
-  { id: 'global-arch', label: '\u5168\u5C40\u67B6\u6784' },
-  { id: 'arch', label: '\u67B6\u6784' },
-  { id: 'sequence-diag', label: '\u5E8F\u5217\u56FE' },
-  { id: 'flow', label: '\u6570\u636E\u6D41' },
-  { id: 'dependency-graph', label: '\u4F9D\u8D56\u56FE' },
-  { id: 'systems', label: '\u7CFB\u7EDF' },
-  { id: 'security-model', label: '\u5B89\u5168\u6A21\u578B' },
-  { id: 'code-metrics', label: '\u4EE3\u7801\u5EA6\u91CF' },
-  { id: 'performance', label: '\u6027\u80FD\u5206\u6790' },
-  { id: 'tree', label: '\u76EE\u5F55' },
-  { id: 'patterns', label: '\u6A21\u5F0F' },
-  { id: 'boot', label: '\u542F\u52A8' },
+  { id: 'hero', label: '概览' },
+  { id: 'tech', label: '技术栏' },
+  { id: 'global-arch', label: '全局架构' },
+  { id: 'arch', label: '架构' },
+  { id: 'sequence-diag', label: '序列图' },
+  { id: 'flow', label: '数据流' },
+  { id: 'dependency-graph', label: '依赖图' },
+  { id: 'systems', label: '系统' },
+  { id: 'security-model', label: '安全模型' },
+  { id: 'code-metrics', label: '代码度量' },
+  { id: 'performance', label: '性能分析' },
+  { id: 'tree', label: '目录' },
+  { id: 'patterns', label: '模式' },
+  { id: 'boot', label: '启动' },
 ]
 
 export default function App() {
@@ -201,7 +201,7 @@ export default function App() {
               borderRadius: 6,
             }}
           >
-            {mobileOpen ? '\u2715' : '\u2630'}
+            {mobileOpen ? '✕' : '☰'}
           </button>
         </div>
       </nav>
