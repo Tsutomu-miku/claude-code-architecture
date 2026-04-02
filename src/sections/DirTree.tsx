@@ -76,29 +76,146 @@ const tree: TreeNode = {
 
 function TreeItem({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
   const [open, setOpen] = useState(depth < 1)
+  const [hovered, setHovered] = useState(false)
   const hasKids = !!node.children?.length
   const isDir = hasKids || node.name.endsWith('/')
 
   return (
-    <div className="tree-item" style={{ paddingLeft: depth * 20 }}>
-      <div className={`tree-row${hasKids ? ' clickable' : ''}`} onClick={() => hasKids && setOpen(!open)}>
-        <span className="tree-toggle">{hasKids ? (open ? '\u25BE' : '\u25B8') : '\u00B7'}</span>
-        <span className={`tree-name${isDir ? ' dir' : ''}`}>{node.name}</span>
-        {node.size && <span className="tree-size">{node.size}</span>}
-        {node.desc && <span className="tree-desc">{node.desc}</span>}
+    <div style={{ paddingLeft: depth > 0 ? 20 : 0 }}>
+      {depth > 0 && (
+        <div style={{
+          position: 'absolute',
+          left: depth * 20 - 10,
+          top: 0,
+          bottom: 0,
+          width: 1,
+          background: '#e2e8f0',
+          pointerEvents: 'none',
+        }} />
+      )}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          padding: '4px 8px',
+          borderRadius: 6,
+          cursor: hasKids ? 'pointer' : 'default',
+          background: hovered ? '#f1f5f9' : 'transparent',
+          transition: 'background 0.15s ease',
+          position: 'relative',
+        }}
+        onClick={() => hasKids && setOpen(!open)}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        <span style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.7rem',
+          color: '#94a3b8',
+          width: 14,
+          textAlign: 'center',
+          flexShrink: 0,
+          userSelect: 'none',
+        }}>
+          {hasKids ? (open ? '\u25BE' : '\u25B8') : '\u00B7'}
+        </span>
+        <span style={{
+          fontSize: '0.85rem',
+          flexShrink: 0,
+          width: 18,
+          textAlign: 'center',
+        }}>
+          {isDir ? '\u{1F4C1}' : '\u{1F4C4}'}
+        </span>
+        <span style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.82rem',
+          fontWeight: isDir ? 600 : 400,
+          color: isDir ? '#d97706' : '#3b82f6',
+        }}>
+          {node.name}
+        </span>
+        {node.size && (
+          <span style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: '0.65rem',
+            color: '#94a3b8',
+            background: '#f1f5f9',
+            padding: '1px 6px',
+            borderRadius: 3,
+            flexShrink: 0,
+          }}>
+            {node.size}
+          </span>
+        )}
+        {node.desc && (
+          <span style={{
+            fontFamily: "'Inter', system-ui, sans-serif",
+            fontSize: '0.75rem',
+            color: '#64748b',
+            marginLeft: 'auto',
+            flexShrink: 0,
+          }}>
+            {node.desc}
+          </span>
+        )}
       </div>
-      {hasKids && open && node.children!.map((c, i) => <TreeItem key={i} node={c} depth={depth + 1} />)}
+      {hasKids && open && (
+        <div style={{ position: 'relative' }}>
+          {node.children!.map((c, i) => (
+            <TreeItem key={i} node={c} depth={depth + 1} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }
 
 export default function DirTree() {
   return (
-    <section id="tree" className="section">
-      <span className="section-tag">05 / Directory</span>
-      <h2 className="section-title">目录结构</h2>
-      <p className="section-desc">src/ 下的核心文件与子目录一览</p>
-      <div className="dir-tree" style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px 16px', border: '1px solid var(--border)' }}>
+    <section id="tree" style={{
+      padding: '80px 24px',
+      maxWidth: 900,
+      margin: '0 auto',
+    }}>
+      <div style={{ textAlign: 'center', marginBottom: 48 }}>
+        <span style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: '0.75rem',
+          color: '#94a3b8',
+          textTransform: 'uppercase',
+          letterSpacing: '0.1em',
+        }}>
+          05 / Directory
+        </span>
+        <h2 style={{
+          fontSize: '2rem',
+          fontWeight: 700,
+          color: '#0f172a',
+          margin: '12px 0 16px',
+          fontFamily: "'Inter', system-ui, sans-serif",
+        }}>
+          \u76EE\u5F55\u7ED3\u6784
+        </h2>
+        <p style={{
+          fontSize: '1rem',
+          color: '#475569',
+          maxWidth: 500,
+          margin: '0 auto',
+          lineHeight: 1.6,
+          fontFamily: "'Inter', system-ui, sans-serif",
+        }}>
+          src/ \u4E0B\u7684\u6838\u5FC3\u6587\u4EF6\u4E0E\u5B50\u76EE\u5F55\u4E00\u89C8
+        </p>
+      </div>
+      <div style={{
+        background: '#ffffff',
+        borderRadius: 12,
+        padding: '20px 16px',
+        border: '1px solid #e2e8f0',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06)',
+      }}>
         <TreeItem node={tree} />
       </div>
     </section>
