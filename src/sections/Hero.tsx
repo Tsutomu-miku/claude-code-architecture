@@ -39,7 +39,7 @@ const stats = [
 
 const highlights = [
   {
-    icon: '\u26A1',
+    icon: '⚡',
     title: 'AsyncGenerator 流式架构',
     desc: '所有 AI 交互都基于 TypeScript AsyncGenerator 实现流式处理。从用户输入到 API 调用再到终端渲染，整条数据管线使用 yield 逐步产出消息片段，实现真正的「边生成边显示」体验。这种架构使得内存占用极低，即使处理超长响应也不会阻塞主线程。',
     color: '#3b82f6',
@@ -47,7 +47,7 @@ const highlights = [
     border: '#bfdbfe',
   },
   {
-    icon: '\uD83D\uDD0C',
+    icon: '🔌',
     title: '多 IDE 桥接',
     desc: '同时支持 VS Code 和 JetBrains 系列 IDE 的深度集成。通过 LSP（Language Server Protocol）与编辑器通信，实现跳转到定义、诊断信息同步、内联代码建议等功能。IDE 扩展与 CLI 共享同一套核心逻辑，保证行为一致性。',
     color: '#7c3aed',
@@ -55,15 +55,15 @@ const highlights = [
     border: '#ddd6fe',
   },
   {
-    icon: '\uD83D\uDEE1\uFE0F',
+    icon: '🛡️',
     title: '4 级权限系统',
-    desc: '从 Default \u2192 AllowedCommands \u2192 TrustedTools \u2192 BypassPermissions 四级安全控制。每个工具执行前都会经过权限校验管道，用户可以通过 .claude/settings.json 精细配置哪些操作需要确认、哪些可以自动执行，在安全与效率之间取得平衡。',
+    desc: '从 Default → AllowedCommands → TrustedTools → BypassPermissions 四级安全控制。每个工具执行前都会经过权限校验管道，用户可以通过 .claude/settings.json 精细配置哪些操作需要确认、哪些可以自动执行，在安全与效率之间取得平衡。',
     color: '#dc2626',
     lightBg: '#fef2f2',
     border: '#fecaca',
   },
   {
-    icon: '\uD83D\uDEA9',
+    icon: '🚩',
     title: 'Feature Flag 驱动',
     desc: 'GrowthBook 集成实现远程功能开关管理，所有新功能通过 feature flag 控制灰度发布。支持用户分群、百分比灰度和 A/B 实验，确保新功能可以安全渐进地推送给用户，出现问题时可即时回滚而无需发布新版本。',
     color: '#d97706',
@@ -71,7 +71,7 @@ const highlights = [
     border: '#fde68a',
   },
   {
-    icon: '\uD83E\uDDE9',
+    icon: '🧩',
     title: 'MCP 协议集成',
     desc: '完整支持 Model Context Protocol 工具扩展标准。用户可以通过配置文件声明外部 MCP 服务器，Claude Code 会在启动时动态发现并加载这些工具，与内置工具统一编排调度。支持 stdio 和 SSE 两种传输方式，实现真正的插件化架构。',
     color: '#06b6d4',
@@ -79,7 +79,7 @@ const highlights = [
     border: '#a5f3fc',
   },
   {
-    icon: '\uD83D\uDD11',
+    icon: '🔑',
     title: 'OAuth 2.0 认证',
     desc: 'JWT Token 管理与多租户支持。实现完整的 OAuth 2.0 授权码流程，在本地启动临时 HTTP 服务器接收回调，自动处理 Token 刷新和过期。支持 Anthropic 直连和第三方 API 网关，通过 Max 组织账户实现团队级别的访问控制。',
     color: '#059669',

@@ -62,48 +62,48 @@ const SECURITY_LAYERS: SecurityLayer[] = [
 ];
 
 const PERM_ROWS: PermRow[] = [
-  { dimension: "文件读取", default: { icon: "\u2705", text: "自动" }, approve: { icon: "\u2705", text: "自动" }, autoApprove: { icon: "\u2705", text: "自动" }, bypass: { icon: "\u2705", text: "自动" } },
-  { dimension: "文件写入", default: { icon: "\u2753", text: "需确认" }, approve: { icon: "\u2753", text: "需确认" }, autoApprove: { icon: "\u2705", text: "自动" }, bypass: { icon: "\u2705", text: "自动" } },
-  { dimension: "Shell 命令", default: { icon: "\u2753", text: "需确认" }, approve: { icon: "\uD83D\uDD04", text: "已批准放行" }, autoApprove: { icon: "\u2705", text: "自动" }, bypass: { icon: "\u2705", text: "自动" } },
-  { dimension: "危险操作", default: { icon: "\u2753", text: "需确认" }, approve: { icon: "\u2753", text: "需确认" }, autoApprove: { icon: "\u2753", text: "需确认" }, bypass: { icon: "\u2705", text: "自动" } },
-  { dimension: "MCP 工具", default: { icon: "\u2753", text: "需确认" }, approve: { icon: "\u2753", text: "需确认" }, autoApprove: { icon: "\u2753", text: "需确认" }, bypass: { icon: "\u2705", text: "自动" } },
-  { dimension: "适用场景", default: { icon: "\uD83D\uDEE1\uFE0F", text: "初次使用/敏感项目" }, approve: { icon: "\uD83D\uDCBB", text: "日常开发" }, autoApprove: { icon: "\u26A1", text: "高效开发" }, bypass: { icon: "\u2699\uFE0F", text: "CI/CD 自动化" } },
+  { dimension: "文件读取", default: { icon: "✅", text: "自动" }, approve: { icon: "✅", text: "自动" }, autoApprove: { icon: "✅", text: "自动" }, bypass: { icon: "✅", text: "自动" } },
+  { dimension: "文件写入", default: { icon: "❓", text: "需确认" }, approve: { icon: "❓", text: "需确认" }, autoApprove: { icon: "✅", text: "自动" }, bypass: { icon: "✅", text: "自动" } },
+  { dimension: "Shell 命令", default: { icon: "❓", text: "需确认" }, approve: { icon: "🔄", text: "已批准放行" }, autoApprove: { icon: "✅", text: "自动" }, bypass: { icon: "✅", text: "自动" } },
+  { dimension: "危险操作", default: { icon: "❓", text: "需确认" }, approve: { icon: "❓", text: "需确认" }, autoApprove: { icon: "❓", text: "需确认" }, bypass: { icon: "✅", text: "自动" } },
+  { dimension: "MCP 工具", default: { icon: "❓", text: "需确认" }, approve: { icon: "❓", text: "需确认" }, autoApprove: { icon: "❓", text: "需确认" }, bypass: { icon: "✅", text: "自动" } },
+  { dimension: "适用场景", default: { icon: "🛡️", text: "初次使用/敏感项目" }, approve: { icon: "💻", text: "日常开发" }, autoApprove: { icon: "⚡", text: "高效开发" }, bypass: { icon: "⚙️", text: "CI/CD 自动化" } },
 ];
 
 const PIPELINE_STEPS: PipelineStep[] = [
-  { id: 1, label: "工具请求", color: "#64748b", icon: "\uD83D\uDCE5", detail: "AI 响应中提取 tool_use 请求，解析工具名称和参数" },
-  { id: 2, label: "黑名单检查", color: "#dc2626", icon: "\uD83D\uDEAB", detail: "检查 blockedTools 配置，匹配则直接拒绝执行" },
-  { id: 3, label: "白名单匹配", color: "#059669", icon: "\u2705", detail: "检查 allowedTools 配置，支持通配符匹配如 \"Bash:npm *\"" },
-  { id: 4, label: "路径范围验证", color: "#3b82f6", icon: "\uD83D\uDCC1", detail: "验证文件操作路径在工作目录范围内，使用 realpath 解析符号链接" },
-  { id: 5, label: "命令注入检测", color: "#d97706", icon: "\uD83D\uDD0D", detail: "检测 Shell 命令中的注入攻击模式，参数转义处理" },
-  { id: 6, label: "敏感文件保护", color: "#ec4899", icon: "\uD83D\uDD12", detail: "保护 .env, .ssh, credentials 等敏感文件，阻止读写操作" },
-  { id: 7, label: "权限模式判断", color: "#7c3aed", icon: "\uD83D\uDEE1\uFE0F", detail: "根据 --permission-mode 决定：自动放行、查缓存、或需用户确认" },
-  { id: 8, label: "用户确认", color: "#4f46e5", icon: "\uD83D\uDC64", detail: "终端渲染权限对话框，用户选择 Allow / Always Allow / Deny" },
-  { id: 9, label: "执行", color: "#059669", icon: "\u25B6\uFE0F", detail: "通过所有检查后，调用 Tool.execute() 执行操作" },
+  { id: 1, label: "工具请求", color: "#64748b", icon: "📥", detail: "AI 响应中提取 tool_use 请求，解析工具名称和参数" },
+  { id: 2, label: "黑名单检查", color: "#dc2626", icon: "🚫", detail: "检查 blockedTools 配置，匹配则直接拒绝执行" },
+  { id: 3, label: "白名单匹配", color: "#059669", icon: "✅", detail: "检查 allowedTools 配置，支持通配符匹配如 \"Bash:npm *\"" },
+  { id: 4, label: "路径范围验证", color: "#3b82f6", icon: "📁", detail: "验证文件操作路径在工作目录范围内，使用 realpath 解析符号链接" },
+  { id: 5, label: "命令注入检测", color: "#d97706", icon: "🔍", detail: "检测 Shell 命令中的注入攻击模式，参数转义处理" },
+  { id: 6, label: "敏感文件保护", color: "#ec4899", icon: "🔒", detail: "保护 .env, .ssh, credentials 等敏感文件，阻止读写操作" },
+  { id: 7, label: "权限模式判断", color: "#7c3aed", icon: "🛡️", detail: "根据 --permission-mode 决定：自动放行、查缓存、或需用户确认" },
+  { id: 8, label: "用户确认", color: "#4f46e5", icon: "👤", detail: "终端渲染权限对话框，用户选择 Allow / Always Allow / Deny" },
+  { id: 9, label: "执行", color: "#059669", icon: "▶️", detail: "通过所有检查后，调用 Tool.execute() 执行操作" },
 ];
 
 const ATTACK_VECTORS: AttackVector[] = [
-  { name: "提示注入", nameEn: "Prompt Injection", icon: "\uD83D\uDCAC", severity: "high", color: "#dc2626", description: "恶意用户或文件内容中嵌入指令，试图操控 AI 执行未授权操作", defense: "工具参数 Zod Schema 严格验证 + 系统提示词隔离 + 输入内容消毒" },
-  { name: "命令注入", nameEn: "Command Injection", icon: "\uD83D\uDCBB", severity: "high", color: "#d97706", description: "通过 Shell 命令参数注入恶意代码，如 ; rm -rf / 或 $(curl ...)", defense: "Shell 参数转义 + 危险命令黑名单 + 用户确认机制" },
-  { name: "路径遍历", nameEn: "Path Traversal", icon: "\uD83D\uDCC2", severity: "medium", color: "#7c3aed", description: "使用 ../ 或符号链接逃逸沙箱目录，访问系统敏感文件", defense: "沙箱路径限制 + realpath() 解析验证 + 符号链接检测" },
-  { name: "Token 泄露", nameEn: "Credential Leak", icon: "\uD83D\uDD11", severity: "medium", color: "#3b82f6", description: "密钥、OAuth Token 或环境变量中的凭据被意外暴露", defense: ".env 文件保护列表 + 内存中 Token 安全存储 + 日志脱敏" },
-  { name: "供应链攻击", nameEn: "MCP Supply Chain", icon: "\uD83D\uDD17", severity: "low", color: "#64748b", description: "恶意 MCP 服务器提供包含后门的工具，或返回篡改的执行结果", defense: "MCP 服务器权限隔离 + 工具调用审计日志 + 用户显式授权" },
+  { name: "提示注入", nameEn: "Prompt Injection", icon: "💬", severity: "high", color: "#dc2626", description: "恶意用户或文件内容中嵌入指令，试图操控 AI 执行未授权操作", defense: "工具参数 Zod Schema 严格验证 + 系统提示词隔离 + 输入内容消毒" },
+  { name: "命令注入", nameEn: "Command Injection", icon: "💻", severity: "high", color: "#d97706", description: "通过 Shell 命令参数注入恶意代码，如 ; rm -rf / 或 $(curl ...)", defense: "Shell 参数转义 + 危险命令黑名单 + 用户确认机制" },
+  { name: "路径遍历", nameEn: "Path Traversal", icon: "📂", severity: "medium", color: "#7c3aed", description: "使用 ../ 或符号链接逃逸沙箱目录，访问系统敏感文件", defense: "沙箱路径限制 + realpath() 解析验证 + 符号链接检测" },
+  { name: "Token 泄露", nameEn: "Credential Leak", icon: "🔑", severity: "medium", color: "#3b82f6", description: "密钥、OAuth Token 或环境变量中的凭据被意外暴露", defense: ".env 文件保护列表 + 内存中 Token 安全存储 + 日志脱敏" },
+  { name: "供应链攻击", nameEn: "MCP Supply Chain", icon: "🔗", severity: "low", color: "#64748b", description: "恶意 MCP 服务器提供包含后门的工具，或返回篡改的执行结果", defense: "MCP 服务器权限隔离 + 工具调用审计日志 + 用户显式授权" },
 ];
 
 const BEST_PRACTICES: BestPractice[] = [
-  { icon: "\uD83D\uDD12", title: "使用最小权限原则", description: "生产环境始终使用 Default 或 Approve 模式，仅在 CI/CD 中使用 Bypass。配置 allowedTools 白名单限制可用工具集。" },
-  { icon: "\uD83D\uDCCB", title: "定期审查权限规则", description: "检查 .claude/settings.json 中的 allowedTools 和 blockedTools 规则，移除不再需要的宽泛匹配模式。" },
-  { icon: "\uD83D\uDEE1\uFE0F", title: "保护敏感文件与目录", description: "确保 .env、.ssh、credentials 等文件在保护列表中。使用 --sandbox 标志限制文件操作范围。" },
-  { icon: "\uD83D\uDD0D", title: "监控与审计", description: "启用 Telemetry 追踪所有工具调用。定期检查 ~/.claude/logs 中的操作日志，关注异常的命令执行模式。" },
-  { icon: "\u26A1", title: "及时更新版本", description: "保持 Claude Code CLI 为最新版本以获取安全补丁。关注 GitHub Release 中的安全相关更新说明。" },
+  { icon: "🔒", title: "使用最小权限原则", description: "生产环境始终使用 Default 或 Approve 模式，仅在 CI/CD 中使用 Bypass。配置 allowedTools 白名单限制可用工具集。" },
+  { icon: "📋", title: "定期审查权限规则", description: "检查 .claude/settings.json 中的 allowedTools 和 blockedTools 规则，移除不再需要的宽泛匹配模式。" },
+  { icon: "🛡️", title: "保护敏感文件与目录", description: "确保 .env、.ssh、credentials 等文件在保护列表中。使用 --sandbox 标志限制文件操作范围。" },
+  { icon: "🔍", title: "监控与审计", description: "启用 Telemetry 追踪所有工具调用。定期检查 ~/.claude/logs 中的操作日志，关注异常的命令执行模式。" },
+  { icon: "⚡", title: "及时更新版本", description: "保持 Claude Code CLI 为最新版本以获取安全补丁。关注 GitHub Release 中的安全相关更新说明。" },
 ];
 
 const SECTIONS: { key: SectionKey; label: string; icon: string }[] = [
-  { key: "overview", label: "安全架构", icon: "\uD83C\uDFDB\uFE0F" },
-  { key: "permissions", label: "权限模式", icon: "\uD83D\uDD10" },
-  { key: "pipeline", label: "检查流水线", icon: "\u2699\uFE0F" },
-  { key: "attacks", label: "攻击面分析", icon: "\u26A0\uFE0F" },
-  { key: "practices", label: "最佳实践", icon: "\uD83D\uDCA1" },
+  { key: "overview", label: "安全架构", icon: "🏛️" },
+  { key: "permissions", label: "权限模式", icon: "🔐" },
+  { key: "pipeline", label: "检查流水线", icon: "⚙️" },
+  { key: "attacks", label: "攻击面分析", icon: "⚠️" },
+  { key: "practices", label: "最佳实践", icon: "💡" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -202,7 +202,7 @@ function OverviewSection() {
             position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
             textAlign: "center", zIndex: layerCount + 1, pointerEvents: "none",
           }}>
-            <div style={{ fontSize: 28, marginBottom: 4 }}>{"\uD83D\uDD12"}</div>
+            <div style={{ fontSize: 28, marginBottom: 4 }}>{"🔒"}</div>
             <div style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>纵深防御</div>
             <div style={{ fontSize: 11, color: "#94a3b8" }}>5 层安全边界</div>
           </div>
@@ -353,7 +353,7 @@ function PipelineSection() {
         border: "1px solid #c7d2fe", background: "#eef2ff",
         display: "flex", alignItems: "center", gap: 10,
       }}>
-        <span style={{ fontSize: 18 }}>{"\uD83D\uDCA1"}</span>
+        <span style={{ fontSize: 18 }}>{"💡"}</span>
         <span style={{ fontSize: 12, color: "#475569", lineHeight: 1.5 }}>
           步骤 8「用户确认」仅在权限模式判断为需要确认时触发。Bypass 模式会跳过此步骤直接执行。
         </span>
@@ -420,7 +420,7 @@ function AttacksSection() {
                   <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ overflow: "hidden" }}>
                     <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #e2e8f0" }}>
                       <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                        <span style={{ fontSize: 14 }}>{"\uD83D\uDEE1\uFE0F"}</span>
+                        <span style={{ fontSize: 14 }}>{"🛡️"}</span>
                         <div>
                           <div style={{ fontSize: 12, fontWeight: 700, color: "#059669", marginBottom: 4 }}>防御措施</div>
                           <p style={{ fontSize: 13, color: "#475569", lineHeight: 1.6, margin: 0 }}>{atk.defense}</p>
@@ -491,7 +491,7 @@ export default function SecurityModel() {
         style={{ textAlign: "center", marginBottom: 40 }}
       >
         <h2 style={{ fontSize: 36, fontWeight: 800, marginBottom: 12, color: "#0f172a" }}>
-          {"\uD83D\uDEE1\uFE0F"} 安全模型深度解析
+          {"🛡️"} 安全模型深度解析
         </h2>
         <p style={{ color: "#475569", fontSize: 16, maxWidth: 600, margin: "0 auto" }}>
           深入分析 Claude Code 的多层安全架构、权限控制机制、攻击防御策略。
