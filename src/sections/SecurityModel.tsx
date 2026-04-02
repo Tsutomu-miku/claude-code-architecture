@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /* ------------------------------------------------------------------ */
@@ -10,6 +10,8 @@ interface SecurityLayer {
   label: string;
   labelEn: string;
   color: string;
+  borderColor: string;
+  bgColor: string;
   description: string;
 }
 
@@ -52,117 +54,56 @@ type SectionKey = "overview" | "permissions" | "pipeline" | "attacks" | "practic
 /* ------------------------------------------------------------------ */
 
 const SECURITY_LAYERS: SecurityLayer[] = [
-  { id: "network", label: "\u5916\u90e8\u8fb9\u754c", labelEn: "Network", color: "#ef4444", description: "\u7f51\u7edc\u5c42\u5b89\u5168\uff1aTLS \u52a0\u5bc6\u4f20\u8f93\u3001API \u7aef\u70b9\u8bbf\u95ee\u63a7\u5236\u3001\u901f\u7387\u9650\u5236" },
-  { id: "auth", label: "\u8ba4\u8bc1\u8fb9\u754c", labelEn: "Auth", color: "#f59e0b", description: "\u8eab\u4efd\u9a8c\u8bc1\uff1aOAuth 2.0 + PKCE\u3001JWT Token \u7ba1\u7406\u3001API Key \u8f6e\u6362" },
-  { id: "permission", label: "\u6743\u9650\u8fb9\u754c", labelEn: "Permission", color: "#8b5cf6", description: "4 \u7ea7\u6743\u9650\u6a21\u5f0f\u3001\u89c4\u5219\u5f15\u64ce\u5339\u914d\u3001\u7528\u6237\u786e\u8ba4\u4ea4\u4e92" },
-  { id: "sandbox", label: "\u6c99\u7bb1\u8fb9\u754c", labelEn: "Sandbox", color: "#3b82f6", description: "\u5de5\u4f5c\u76ee\u5f55\u9650\u5236\u3001\u8def\u5f84\u904d\u5386\u9632\u62a4\u3001\u6587\u4ef6\u7cfb\u7edf\u9694\u79bb" },
-  { id: "execution", label: "\u5de5\u5177\u6267\u884c", labelEn: "Execution", color: "#10b981", description: "\u53c2\u6570 Zod Schema \u9a8c\u8bc1\u3001\u547d\u4ee4\u6ce8\u5165\u9632\u62a4\u3001\u8d85\u65f6\u63a7\u5236" },
+  { id: "network", label: "外部边界", labelEn: "Network", color: "#dc2626", borderColor: "#fecaca", bgColor: "#fef2f2", description: "网络层安全：TLS 加密传输、API 端点访问控制、速率限制" },
+  { id: "auth", label: "认证边界", labelEn: "Auth", color: "#d97706", borderColor: "#fde68a", bgColor: "#fffbeb", description: "身份验证：OAuth2 + PKCE、Token 管理、密钥轮换" },
+  { id: "permission", label: "权限边界", labelEn: "Permission", color: "#3b82f6", borderColor: "#bfdbfe", bgColor: "#eff6ff", description: "4 级权限模式、规则引擎匹配、用户确认交互" },
+  { id: "sandbox", label: "沙箱边界", labelEn: "Sandbox", color: "#059669", borderColor: "#a7f3d0", bgColor: "#ecfdf5", description: "工作目录限制、路径遍历防护、文件系统隔离" },
+  { id: "execution", label: "工具执行", labelEn: "Execution", color: "#7c3aed", borderColor: "#ddd6fe", bgColor: "#f5f3ff", description: "参数 Zod Schema 验证、命令注入防护、超时控制" },
 ];
 
 const PERM_ROWS: PermRow[] = [
-  {
-    dimension: "\u6587\u4ef6\u8bfb\u53d6",
-    default: { icon: "\u2705", text: "\u81ea\u52a8" },
-    approve: { icon: "\u2705", text: "\u81ea\u52a8" },
-    autoApprove: { icon: "\u2705", text: "\u81ea\u52a8" },
-    bypass: { icon: "\u2705", text: "\u81ea\u52a8" },
-  },
-  {
-    dimension: "\u6587\u4ef6\u5199\u5165",
-    default: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    approve: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    autoApprove: { icon: "\u2705", text: "\u81ea\u52a8" },
-    bypass: { icon: "\u2705", text: "\u81ea\u52a8" },
-  },
-  {
-    dimension: "Shell \u547d\u4ee4",
-    default: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    approve: { icon: "\uD83D\uDD04", text: "\u5df2\u6279\u51c6\u653e\u884c" },
-    autoApprove: { icon: "\u2705", text: "\u81ea\u52a8" },
-    bypass: { icon: "\u2705", text: "\u81ea\u52a8" },
-  },
-  {
-    dimension: "\u5371\u9669\u64cd\u4f5c",
-    default: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    approve: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    autoApprove: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    bypass: { icon: "\u2705", text: "\u81ea\u52a8" },
-  },
-  {
-    dimension: "MCP \u5de5\u5177",
-    default: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    approve: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    autoApprove: { icon: "\u2753", text: "\u9700\u786e\u8ba4" },
-    bypass: { icon: "\u2705", text: "\u81ea\u52a8" },
-  },
-  {
-    dimension: "\u9002\u7528\u573a\u666f",
-    default: { icon: "\uD83D\uDEE1\uFE0F", text: "\u521d\u6b21\u4f7f\u7528/\u654f\u611f\u9879\u76ee" },
-    approve: { icon: "\uD83D\uDCBB", text: "\u65e5\u5e38\u5f00\u53d1" },
-    autoApprove: { icon: "\u26A1", text: "\u9ad8\u6548\u5f00\u53d1" },
-    bypass: { icon: "\u2699\uFE0F", text: "CI/CD \u81ea\u52a8\u5316" },
-  },
+  { dimension: "文件读取", default: { icon: "\u2705", text: "自动" }, approve: { icon: "\u2705", text: "自动" }, autoApprove: { icon: "\u2705", text: "自动" }, bypass: { icon: "\u2705", text: "自动" } },
+  { dimension: "文件写入", default: { icon: "\u2753", text: "需确认" }, approve: { icon: "\u2753", text: "需确认" }, autoApprove: { icon: "\u2705", text: "自动" }, bypass: { icon: "\u2705", text: "自动" } },
+  { dimension: "Shell 命令", default: { icon: "\u2753", text: "需确认" }, approve: { icon: "\uD83D\uDD04", text: "已批准放行" }, autoApprove: { icon: "\u2705", text: "自动" }, bypass: { icon: "\u2705", text: "自动" } },
+  { dimension: "危险操作", default: { icon: "\u2753", text: "需确认" }, approve: { icon: "\u2753", text: "需确认" }, autoApprove: { icon: "\u2753", text: "需确认" }, bypass: { icon: "\u2705", text: "自动" } },
+  { dimension: "MCP 工具", default: { icon: "\u2753", text: "需确认" }, approve: { icon: "\u2753", text: "需确认" }, autoApprove: { icon: "\u2753", text: "需确认" }, bypass: { icon: "\u2705", text: "自动" } },
+  { dimension: "适用场景", default: { icon: "\uD83D\uDEE1\uFE0F", text: "初次使用/敏感项目" }, approve: { icon: "\uD83D\uDCBB", text: "日常开发" }, autoApprove: { icon: "\u26A1", text: "高效开发" }, bypass: { icon: "\u2699\uFE0F", text: "CI/CD 自动化" } },
 ];
 
 const PIPELINE_STEPS: PipelineStep[] = [
-  { id: 1, label: "\u5de5\u5177\u8bf7\u6c42", color: "#64748b", icon: "\uD83D\uDCE5", detail: "AI \u54cd\u5e94\u4e2d\u63d0\u53d6 tool_use \u8bf7\u6c42\uff0c\u89e3\u6790\u5de5\u5177\u540d\u79f0\u548c\u53c2\u6570" },
-  { id: 2, label: "\u9ed1\u540d\u5355\u68c0\u67e5", color: "#ef4444", icon: "\uD83D\uDEAB", detail: "\u68c0\u67e5 blockedTools \u914d\u7f6e\uff0c\u5339\u914d\u5219\u76f4\u63a5\u62d2\u7edd\u6267\u884c" },
-  { id: 3, label: "\u767d\u540d\u5355\u5339\u914d", color: "#10b981", icon: "\u2705", detail: "\u68c0\u67e5 allowedTools \u914d\u7f6e\uff0c\u652f\u6301\u901a\u914d\u7b26\u5339\u914d\u5982 \"Bash:npm *\"" },
-  { id: 4, label: "\u8def\u5f84\u8303\u56f4\u9a8c\u8bc1", color: "#3b82f6", icon: "\uD83D\uDCC1", detail: "\u9a8c\u8bc1\u6587\u4ef6\u64cd\u4f5c\u8def\u5f84\u5728\u5de5\u4f5c\u76ee\u5f55\u8303\u56f4\u5185\uff0c\u4f7f\u7528 realpath \u89e3\u6790\u7b26\u53f7\u94fe\u63a5" },
-  { id: 5, label: "\u547d\u4ee4\u6ce8\u5165\u68c0\u6d4b", color: "#f59e0b", icon: "\uD83D\uDD0D", detail: "\u68c0\u6d4b Shell \u547d\u4ee4\u4e2d\u7684\u6ce8\u5165\u653b\u51fb\u6a21\u5f0f\uff0c\u53c2\u6570\u8f6c\u4e49\u5904\u7406" },
-  { id: 6, label: "\u654f\u611f\u6587\u4ef6\u4fdd\u62a4", color: "#ec4899", icon: "\uD83D\uDD12", detail: "\u4fdd\u62a4 .env, .ssh, credentials \u7b49\u654f\u611f\u6587\u4ef6\uff0c\u963b\u6b62\u8bfb\u5199\u64cd\u4f5c" },
-  { id: 7, label: "\u6743\u9650\u6a21\u5f0f\u5224\u65ad", color: "#8b5cf6", icon: "\uD83D\uDEE1\uFE0F", detail: "\u6839\u636e --permission-mode \u51b3\u5b9a\uff1a\u81ea\u52a8\u653e\u884c\u3001\u67e5\u7f13\u5b58\u3001\u6216\u9700\u7528\u6237\u786e\u8ba4" },
-  { id: 8, label: "\u7528\u6237\u786e\u8ba4", color: "#6366f1", icon: "\uD83D\uDC64", detail: "\u7ec8\u7aef\u6e32\u67d3\u6743\u9650\u5bf9\u8bdd\u6846\uff0c\u7528\u6237\u9009\u62e9 Allow / Always Allow / Deny" },
-  { id: 9, label: "\u6267\u884c", color: "#10b981", icon: "\u25B6\uFE0F", detail: "\u901a\u8fc7\u6240\u6709\u68c0\u67e5\u540e\uff0c\u8c03\u7528 Tool.execute() \u6267\u884c\u64cd\u4f5c" },
+  { id: 1, label: "工具请求", color: "#64748b", icon: "\uD83D\uDCE5", detail: "AI 响应中提取 tool_use 请求，解析工具名称和参数" },
+  { id: 2, label: "黑名单检查", color: "#dc2626", icon: "\uD83D\uDEAB", detail: "检查 blockedTools 配置，匹配则直接拒绝执行" },
+  { id: 3, label: "白名单匹配", color: "#059669", icon: "\u2705", detail: "检查 allowedTools 配置，支持通配符匹配如 \"Bash:npm *\"" },
+  { id: 4, label: "路径范围验证", color: "#3b82f6", icon: "\uD83D\uDCC1", detail: "验证文件操作路径在工作目录范围内，使用 realpath 解析符号链接" },
+  { id: 5, label: "命令注入检测", color: "#d97706", icon: "\uD83D\uDD0D", detail: "检测 Shell 命令中的注入攻击模式，参数转义处理" },
+  { id: 6, label: "敏感文件保护", color: "#ec4899", icon: "\uD83D\uDD12", detail: "保护 .env, .ssh, credentials 等敏感文件，阻止读写操作" },
+  { id: 7, label: "权限模式判断", color: "#7c3aed", icon: "\uD83D\uDEE1\uFE0F", detail: "根据 --permission-mode 决定：自动放行、查缓存、或需用户确认" },
+  { id: 8, label: "用户确认", color: "#4f46e5", icon: "\uD83D\uDC64", detail: "终端渲染权限对话框，用户选择 Allow / Always Allow / Deny" },
+  { id: 9, label: "执行", color: "#059669", icon: "\u25B6\uFE0F", detail: "通过所有检查后，调用 Tool.execute() 执行操作" },
 ];
 
 const ATTACK_VECTORS: AttackVector[] = [
-  {
-    name: "\u63d0\u793a\u6ce8\u5165", nameEn: "Prompt Injection", icon: "\uD83D\uDCAC",
-    severity: "high", color: "#ef4444",
-    description: "\u6076\u610f\u7528\u6237\u6216\u6587\u4ef6\u5185\u5bb9\u4e2d\u5d4c\u5165\u6307\u4ee4\uff0c\u8bd5\u56fe\u64cd\u63a7 AI \u6267\u884c\u672a\u6388\u6743\u64cd\u4f5c",
-    defense: "\u5de5\u5177\u53c2\u6570 Zod Schema \u4e25\u683c\u9a8c\u8bc1 + \u7cfb\u7edf\u63d0\u793a\u8bcd\u9694\u79bb + \u8f93\u5165\u5185\u5bb9\u6d88\u6bd2",
-  },
-  {
-    name: "\u547d\u4ee4\u6ce8\u5165", nameEn: "Command Injection", icon: "\uD83D\uDCBB",
-    severity: "high", color: "#f59e0b",
-    description: "\u901a\u8fc7 Shell \u547d\u4ee4\u53c2\u6570\u6ce8\u5165\u6076\u610f\u4ee3\u7801\uff0c\u5982 ; rm -rf / \u6216 $(curl ...)",
-    defense: "Shell \u53c2\u6570\u8f6c\u4e49 + \u5371\u9669\u547d\u4ee4\u9ed1\u540d\u5355 + \u7528\u6237\u786e\u8ba4\u673a\u5236",
-  },
-  {
-    name: "\u8def\u5f84\u904d\u5386", nameEn: "Path Traversal", icon: "\uD83D\uDCC2",
-    severity: "medium", color: "#8b5cf6",
-    description: "\u4f7f\u7528 ../ \u6216\u7b26\u53f7\u94fe\u63a5\u9003\u9038\u6c99\u7bb1\u76ee\u5f55\uff0c\u8bbf\u95ee\u7cfb\u7edf\u654f\u611f\u6587\u4ef6",
-    defense: "\u6c99\u7bb1\u8def\u5f84\u9650\u5236 + realpath() \u89e3\u6790\u9a8c\u8bc1 + \u7b26\u53f7\u94fe\u63a5\u68c0\u6d4b",
-  },
-  {
-    name: "Token \u6cc4\u9732", nameEn: "Credential Leak", icon: "\uD83D\uDD11",
-    severity: "medium", color: "#3b82f6",
-    description: "API Key\u3001OAuth Token \u6216\u73af\u5883\u53d8\u91cf\u4e2d\u7684\u51ed\u636e\u88ab\u610f\u5916\u66b4\u9732",
-    defense: ".env \u6587\u4ef6\u4fdd\u62a4\u5217\u8868 + \u5185\u5b58\u4e2d Token \u5b89\u5168\u5b58\u50a8 + \u65e5\u5fd7\u8131\u654f",
-  },
-  {
-    name: "\u4f9b\u5e94\u94fe\u653b\u51fb", nameEn: "MCP Supply Chain", icon: "\uD83D\uDD17",
-    severity: "low", color: "#64748b",
-    description: "\u6076\u610f MCP \u670d\u52a1\u5668\u63d0\u4f9b\u5305\u542b\u540e\u95e8\u7684\u5de5\u5177\uff0c\u6216\u8fd4\u56de\u7be1\u6539\u7684\u6267\u884c\u7ed3\u679c",
-    defense: "MCP \u670d\u52a1\u5668\u6743\u9650\u9694\u79bb + \u5de5\u5177\u8c03\u7528\u5ba1\u8ba1\u65e5\u5fd7 + \u7528\u6237\u663e\u5f0f\u6388\u6743",
-  },
+  { name: "提示注入", nameEn: "Prompt Injection", icon: "\uD83D\uDCAC", severity: "high", color: "#dc2626", description: "恶意用户或文件内容中嵌入指令，试图操控 AI 执行未授权操作", defense: "工具参数 Zod Schema 严格验证 + 系统提示词隔离 + 输入内容消毒" },
+  { name: "命令注入", nameEn: "Command Injection", icon: "\uD83D\uDCBB", severity: "high", color: "#d97706", description: "通过 Shell 命令参数注入恶意代码，如 ; rm -rf / 或 $(curl ...)", defense: "Shell 参数转义 + 危险命令黑名单 + 用户确认机制" },
+  { name: "路径遍历", nameEn: "Path Traversal", icon: "\uD83D\uDCC2", severity: "medium", color: "#7c3aed", description: "使用 ../ 或符号链接逃逸沙箱目录，访问系统敏感文件", defense: "沙箱路径限制 + realpath() 解析验证 + 符号链接检测" },
+  { name: "Token 泄露", nameEn: "Credential Leak", icon: "\uD83D\uDD11", severity: "medium", color: "#3b82f6", description: "密钥、OAuth Token 或环境变量中的凭据被意外暴露", defense: ".env 文件保护列表 + 内存中 Token 安全存储 + 日志脱敏" },
+  { name: "供应链攻击", nameEn: "MCP Supply Chain", icon: "\uD83D\uDD17", severity: "low", color: "#64748b", description: "恶意 MCP 服务器提供包含后门的工具，或返回篡改的执行结果", defense: "MCP 服务器权限隔离 + 工具调用审计日志 + 用户显式授权" },
 ];
 
 const BEST_PRACTICES: BestPractice[] = [
-  { icon: "\uD83D\uDD12", title: "\u4f7f\u7528\u6700\u5c0f\u6743\u9650\u539f\u5219", description: "\u751f\u4ea7\u73af\u5883\u59cb\u7ec8\u4f7f\u7528 Default \u6216 Approve \u6a21\u5f0f\uff0c\u4ec5\u5728 CI/CD \u4e2d\u4f7f\u7528 Bypass\u3002\u914d\u7f6e allowedTools \u767d\u540d\u5355\u9650\u5236\u53ef\u7528\u5de5\u5177\u96c6\u3002" },
-  { icon: "\uD83D\uDCCB", title: "\u5b9a\u671f\u5ba1\u67e5\u6743\u9650\u89c4\u5219", description: "\u68c0\u67e5 .claude/settings.json \u4e2d\u7684 allowedTools \u548c blockedTools \u89c4\u5219\uff0c\u79fb\u9664\u4e0d\u518d\u9700\u8981\u7684\u5bbd\u6cdb\u5339\u914d\u6a21\u5f0f\u3002" },
-  { icon: "\uD83D\uDEE1\uFE0F", title: "\u4fdd\u62a4\u654f\u611f\u6587\u4ef6\u4e0e\u76ee\u5f55", description: "\u786e\u4fdd .env\u3001.ssh\u3001credentials \u7b49\u6587\u4ef6\u5728\u4fdd\u62a4\u5217\u8868\u4e2d\u3002\u4f7f\u7528 --sandbox \u6807\u5fd7\u9650\u5236\u6587\u4ef6\u64cd\u4f5c\u8303\u56f4\u3002" },
-  { icon: "\uD83D\uDD0D", title: "\u76d1\u63a7\u4e0e\u5ba1\u8ba1", description: "\u542f\u7528 Telemetry \u8ffd\u8e2a\u6240\u6709\u5de5\u5177\u8c03\u7528\u3002\u5b9a\u671f\u68c0\u67e5 ~/.claude/logs \u4e2d\u7684\u64cd\u4f5c\u65e5\u5fd7\uff0c\u5173\u6ce8\u5f02\u5e38\u7684\u547d\u4ee4\u6267\u884c\u6a21\u5f0f\u3002" },
-  { icon: "\u26A1", title: "\u53ca\u65f6\u66f4\u65b0\u7248\u672c", description: "\u4fdd\u6301 Claude Code CLI \u4e3a\u6700\u65b0\u7248\u672c\u4ee5\u83b7\u53d6\u5b89\u5168\u8865\u4e01\u3002\u5173\u6ce8 GitHub Release \u4e2d\u7684\u5b89\u5168\u76f8\u5173\u66f4\u65b0\u8bf4\u660e\u3002" },
+  { icon: "\uD83D\uDD12", title: "使用最小权限原则", description: "生产环境始终使用 Default 或 Approve 模式，仅在 CI/CD 中使用 Bypass。配置 allowedTools 白名单限制可用工具集。" },
+  { icon: "\uD83D\uDCCB", title: "定期审查权限规则", description: "检查 .claude/settings.json 中的 allowedTools 和 blockedTools 规则，移除不再需要的宽泛匹配模式。" },
+  { icon: "\uD83D\uDEE1\uFE0F", title: "保护敏感文件与目录", description: "确保 .env、.ssh、credentials 等文件在保护列表中。使用 --sandbox 标志限制文件操作范围。" },
+  { icon: "\uD83D\uDD0D", title: "监控与审计", description: "启用 Telemetry 追踪所有工具调用。定期检查 ~/.claude/logs 中的操作日志，关注异常的命令执行模式。" },
+  { icon: "\u26A1", title: "及时更新版本", description: "保持 Claude Code CLI 为最新版本以获取安全补丁。关注 GitHub Release 中的安全相关更新说明。" },
 ];
 
 const SECTIONS: { key: SectionKey; label: string; icon: string }[] = [
-  { key: "overview", label: "\u5b89\u5168\u67b6\u6784", icon: "\uD83C\uDFDB\uFE0F" },
-  { key: "permissions", label: "\u6743\u9650\u6a21\u5f0f", icon: "\uD83D\uDD10" },
-  { key: "pipeline", label: "\u68c0\u67e5\u6d41\u6c34\u7ebf", icon: "\u2699\uFE0F" },
-  { key: "attacks", label: "\u653b\u51fb\u9762\u5206\u6790", icon: "\u26A0\uFE0F" },
-  { key: "practices", label: "\u6700\u4f73\u5b9e\u8df5", icon: "\uD83D\uDCA1" },
+  { key: "overview", label: "安全架构", icon: "\uD83C\uDFDB\uFE0F" },
+  { key: "permissions", label: "权限模式", icon: "\uD83D\uDD10" },
+  { key: "pipeline", label: "检查流水线", icon: "\u2699\uFE0F" },
+  { key: "attacks", label: "攻击面分析", icon: "\u26A0\uFE0F" },
+  { key: "practices", label: "最佳实践", icon: "\uD83D\uDCA1" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -178,15 +119,15 @@ function SectionNav({ active, onChange }: { active: SectionKey; onChange: (k: Se
           <motion.button
             key={s.key}
             onClick={() => onChange(s.key)}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             style={{
               padding: "8px 18px", borderRadius: 10, cursor: "pointer", fontWeight: 600, fontSize: 13,
-              display: "flex", alignItems: "center", gap: 6, fontFamily: "inherit", outline: "none",
-              border: isActive ? "1.5px solid rgba(239,68,68,0.5)" : "1.5px solid rgba(148,163,184,0.12)",
-              background: isActive ? "linear-gradient(135deg, rgba(239,68,68,0.15), rgba(139,92,246,0.1))" : "rgba(30,32,44,0.6)",
-              color: isActive ? "#e2e8f0" : "#64748b",
-              boxShadow: isActive ? "0 0 12px rgba(239,68,68,0.15)" : "none",
+              display: "flex", alignItems: "center", gap: 6, fontFamily: "'Inter', system-ui, sans-serif", outline: "none",
+              border: isActive ? "1.5px solid #3b82f6" : "1.5px solid #e2e8f0",
+              background: isActive ? "#eff6ff" : "#ffffff",
+              color: isActive ? "#3b82f6" : "#64748b",
+              boxShadow: isActive ? "0 1px 3px rgba(59,130,246,0.15)" : "0 1px 2px rgba(0,0,0,0.04)",
               transition: "all 0.2s",
             }}
           >
@@ -205,10 +146,10 @@ function OverviewSection() {
   const layerCount = SECURITY_LAYERS.length;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}>
       <div style={{ textAlign: "center", marginBottom: 20 }}>
-        <p style={{ fontSize: 14, color: "#94a3b8", maxWidth: 550, margin: "0 auto" }}>
-          Claude Code \u91c7\u7528 5 \u5c42\u7eb5\u6df1\u9632\u5fa1\u67b6\u6784\uff0c\u6bcf\u4e00\u5c42\u90fd\u6784\u6210\u72ec\u7acb\u7684\u5b89\u5168\u8fb9\u754c\u3002
+        <p style={{ fontSize: 14, color: "#475569", maxWidth: 550, margin: "0 auto" }}>
+          Claude Code 采用 5 层纵深防御架构，每一层都构成独立的安全边界。
         </p>
       </div>
 
@@ -218,26 +159,25 @@ function OverviewSection() {
           {SECURITY_LAYERS.map((layer, i) => {
             const inset = i * 36;
             const isHl = hoveredLayer === layer.id;
-            const baseOpacity = 0.08 + i * 0.03;
             return (
               <motion.div
                 key={layer.id}
                 onMouseEnter={() => setHoveredLayer(layer.id)}
                 onMouseLeave={() => setHoveredLayer(null)}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.1, duration: 0.4 }}
+                transition={{ delay: i * 0.08, duration: 0.35 }}
                 style={{
                   position: i === 0 ? "relative" : "absolute",
                   top: inset, left: inset, right: inset,
                   bottom: i === 0 ? undefined : inset,
                   height: i === 0 ? 340 : undefined,
                   borderRadius: 16 - i * 1.5,
-                  border: `1.5px solid ${isHl ? layer.color : layer.color + "44"}`,
-                  background: isHl ? `${layer.color}18` : `${layer.color}${Math.round(baseOpacity * 255).toString(16).padStart(2, "0")}`,
+                  border: `2px solid ${isHl ? layer.color : layer.borderColor}`,
+                  background: isHl ? layer.bgColor : "#ffffff",
                   cursor: "pointer",
                   transition: "all 0.25s ease",
-                  boxShadow: isHl ? `0 0 24px ${layer.color}25, inset 0 0 30px ${layer.color}08` : "none",
+                  boxShadow: isHl ? `0 2px 12px ${layer.color}15` : "0 1px 3px rgba(0,0,0,0.04)",
                   zIndex: i,
                   display: "flex", alignItems: "flex-start", justifyContent: "space-between",
                   padding: "8px 14px",
@@ -246,12 +186,11 @@ function OverviewSection() {
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <div style={{
                     width: 8, height: 8, borderRadius: "50%", background: layer.color,
-                    boxShadow: `0 0 6px ${layer.color}66`,
                   }} />
                   <span style={{ fontSize: 12, fontWeight: 700, color: layer.color, letterSpacing: 0.5 }}>
                     {layer.label}
                   </span>
-                  <span style={{ fontSize: 10, color: "#64748b", fontWeight: 500 }}>
+                  <span style={{ fontSize: 10, color: "#94a3b8", fontWeight: 500 }}>
                     ({layer.labelEn})
                   </span>
                 </div>
@@ -260,13 +199,12 @@ function OverviewSection() {
           })}
           {/* Center text */}
           <div style={{
-            position: "absolute",
-            top: "50%", left: "50%", transform: "translate(-50%, -50%)",
+            position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
             textAlign: "center", zIndex: layerCount + 1, pointerEvents: "none",
           }}>
             <div style={{ fontSize: 28, marginBottom: 4 }}>{"\uD83D\uDD12"}</div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#e2e8f0" }}>\u7eb5\u6df1\u9632\u5fa1</div>
-            <div style={{ fontSize: 11, color: "#64748b" }}>5 \u5c42\u5b89\u5168\u8fb9\u754c</div>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>纵深防御</div>
+            <div style={{ fontSize: 11, color: "#94a3b8" }}>5 层安全边界</div>
           </div>
         </div>
       </div>
@@ -274,19 +212,13 @@ function OverviewSection() {
       {/* Layer descriptions */}
       <AnimatePresence>
         {hoveredLayer && (
-          <motion.div
-            key={hoveredLayer}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            style={{ overflow: "hidden" }}
-          >
+          <motion.div key={hoveredLayer} initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ overflow: "hidden" }}>
             <div style={{
               padding: "14px 20px", borderRadius: 12, marginTop: 12,
-              border: `1px solid ${SECURITY_LAYERS.find(l => l.id === hoveredLayer)?.color}44`,
-              background: "rgba(30,32,44,0.9)",
+              border: `1px solid ${SECURITY_LAYERS.find(l => l.id === hoveredLayer)?.borderColor}`,
+              background: SECURITY_LAYERS.find(l => l.id === hoveredLayer)?.bgColor,
             }}>
-              <p style={{ fontSize: 13, color: "#94a3b8", lineHeight: 1.6, margin: 0 }}>
+              <p style={{ fontSize: 13, color: "#475569", lineHeight: 1.6, margin: 0 }}>
                 {SECURITY_LAYERS.find(l => l.id === hoveredLayer)?.description}
               </p>
             </div>
@@ -302,38 +234,29 @@ function OverviewSection() {
 function PermissionsSection() {
   const modes = ["Default", "Approve", "AutoApprove", "Bypass"] as const;
   const modeKeys = ["default", "approve", "autoApprove", "bypass"] as const;
-  const modeColors = ["#ef4444", "#f59e0b", "#10b981", "#64748b"];
+  const modeColors = ["#dc2626", "#d97706", "#059669", "#64748b"];
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}>
       <div style={{ textAlign: "center", marginBottom: 20 }}>
-        <p style={{ fontSize: 14, color: "#94a3b8", maxWidth: 550, margin: "0 auto" }}>
-          4 \u7ea7\u6743\u9650\u6a21\u5f0f\u4ece\u4e25\u683c\u5230\u5bbd\u677e\uff0c\u9002\u914d\u4e0d\u540c\u4f7f\u7528\u573a\u666f\u7684\u5b89\u5168\u9700\u6c42\u3002
+        <p style={{ fontSize: 14, color: "#475569", maxWidth: 550, margin: "0 auto" }}>
+          4 级权限模式从严格到宽松，适配不同使用场景的安全需求。
         </p>
       </div>
 
       <div style={{ overflowX: "auto" }}>
-        <table style={{
+        <table className="data-table" style={{
           width: "100%", borderCollapse: "separate", borderSpacing: 0,
-          borderRadius: 14, overflow: "hidden",
-          border: "1px solid rgba(148,163,184,0.1)",
+          borderRadius: 12, overflow: "hidden", border: "1px solid #e2e8f0",
+          fontFamily: "'Inter', system-ui, sans-serif",
         }}>
           <thead>
             <tr>
-              <th style={{
-                padding: "14px 16px", textAlign: "left", fontSize: 13, fontWeight: 700,
-                color: "#94a3b8", background: "rgba(30,32,44,0.9)",
-                borderBottom: "1px solid rgba(148,163,184,0.1)",
-              }}>
-                \u7ef4\u5ea6
+              <th style={{ padding: "14px 16px", textAlign: "left", fontSize: 13, fontWeight: 700, color: "#475569", background: "#f1f5f9", borderBottom: "1px solid #e2e8f0" }}>
+                维度
               </th>
               {modes.map((mode, i) => (
-                <th key={mode} style={{
-                  padding: "14px 12px", textAlign: "center", fontSize: 13, fontWeight: 700,
-                  color: modeColors[i], background: "rgba(30,32,44,0.9)",
-                  borderBottom: "1px solid rgba(148,163,184,0.1)",
-                  borderLeft: "1px solid rgba(148,163,184,0.06)",
-                }}>
+                <th key={mode} style={{ padding: "14px 12px", textAlign: "center", fontSize: 13, fontWeight: 700, color: modeColors[i], background: "#f1f5f9", borderBottom: "1px solid #e2e8f0", borderLeft: "1px solid #e2e8f0" }}>
                   {mode}
                 </th>
               ))}
@@ -343,27 +266,18 @@ function PermissionsSection() {
             {PERM_ROWS.map((row, ri) => (
               <motion.tr
                 key={row.dimension}
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: -8 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: ri * 0.06, duration: 0.3 }}
-                style={{ background: ri % 2 === 0 ? "rgba(15,17,25,0.5)" : "rgba(30,32,44,0.4)" }}
+                transition={{ delay: ri * 0.05, duration: 0.25 }}
+                style={{ background: ri % 2 === 0 ? "#ffffff" : "#f8fafc" }}
               >
-                <td style={{
-                  padding: "12px 16px", fontSize: 13, fontWeight: 600, color: "#e2e8f0",
-                  borderBottom: "1px solid rgba(148,163,184,0.06)",
-                  whiteSpace: "nowrap",
-                }}>
+                <td style={{ padding: "12px 16px", fontSize: 13, fontWeight: 600, color: "#0f172a", borderBottom: "1px solid #f1f5f9", whiteSpace: "nowrap" }}>
                   {row.dimension}
                 </td>
-                {modeKeys.map((mk, mi) => {
+                {modeKeys.map((mk) => {
                   const cell = row[mk];
                   return (
-                    <td key={mk} style={{
-                      padding: "10px 12px", textAlign: "center", fontSize: 13,
-                      borderBottom: "1px solid rgba(148,163,184,0.06)",
-                      borderLeft: "1px solid rgba(148,163,184,0.06)",
-                      color: "#94a3b8",
-                    }}>
+                    <td key={mk} style={{ padding: "10px 12px", textAlign: "center", fontSize: 13, borderBottom: "1px solid #f1f5f9", borderLeft: "1px solid #f1f5f9", color: "#475569" }}>
                       <span style={{ fontSize: 16, marginRight: 4 }}>{cell.icon}</span>
                       <span style={{ fontSize: 12 }}>{cell.text}</span>
                     </td>
@@ -384,72 +298,48 @@ function PipelineSection() {
   const [expandedStep, setExpandedStep] = useState<number | null>(null);
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}>
       <div style={{ textAlign: "center", marginBottom: 20 }}>
-        <p style={{ fontSize: 14, color: "#94a3b8", maxWidth: 580, margin: "0 auto" }}>
-          \u6bcf\u4e2a\u5de5\u5177\u8c03\u7528\u90fd\u7ecf\u8fc7 9 \u6b65\u5b89\u5168\u68c0\u67e5\u6d41\u6c34\u7ebf\uff0c\u4efb\u4e00\u6b65\u9aa4\u5931\u8d25\u5373\u7ec8\u6b62\u6267\u884c\u3002
+        <p style={{ fontSize: 14, color: "#475569", maxWidth: 580, margin: "0 auto" }}>
+          每个工具调用都经过 9 步安全检查流水线，任一步骤失败即终止执行。
         </p>
       </div>
 
-      {/* Horizontal pipeline (wrapping) */}
-      <div style={{
-        display: "flex", flexWrap: "wrap", gap: 0, justifyContent: "center",
-        alignItems: "flex-start", padding: "8px 0",
-      }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 0, justifyContent: "center", alignItems: "flex-start", padding: "8px 0" }}>
         {PIPELINE_STEPS.map((step, i) => {
           const isExpanded = expandedStep === step.id;
           return (
             <div key={step.id} style={{ display: "flex", alignItems: "center" }}>
-              {/* Step card */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.92 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.06, duration: 0.35 }}
+                transition={{ delay: i * 0.05, duration: 0.3 }}
                 onClick={() => setExpandedStep(isExpanded ? null : step.id)}
                 style={{
                   padding: "10px 14px", borderRadius: 12, cursor: "pointer",
-                  border: `1.5px solid ${isExpanded ? step.color : step.color + "44"}`,
-                  background: isExpanded ? `${step.color}18` : "rgba(30,32,44,0.8)",
-                  boxShadow: isExpanded ? `0 0 16px ${step.color}22` : "none",
+                  border: `1.5px solid ${isExpanded ? step.color : "#e2e8f0"}`,
+                  background: isExpanded ? "#f8fafc" : "#ffffff",
+                  boxShadow: isExpanded ? "0 2px 8px rgba(0,0,0,0.08)" : "0 1px 3px rgba(0,0,0,0.06)",
                   transition: "all 0.25s", textAlign: "center", minWidth: 80,
-                  position: "relative",
                 }}
               >
                 <div style={{ fontSize: 20, marginBottom: 4 }}>{step.icon}</div>
-                <div style={{ fontSize: 11, fontWeight: 700, color: step.color, lineHeight: 1.3 }}>
-                  {step.label}
-                </div>
-                <div style={{ fontSize: 9, color: "#475569", marginTop: 2 }}>#{step.id}</div>
-                {/* Expanded detail */}
+                <div style={{ fontSize: 11, fontWeight: 700, color: step.color, lineHeight: 1.3 }}>{step.label}</div>
+                <div style={{ fontSize: 9, color: "#94a3b8", marginTop: 2 }}>#{step.id}</div>
                 <AnimatePresence>
                   {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      style={{ overflow: "hidden" }}
-                    >
-                      <div style={{
-                        marginTop: 8, padding: "8px 4px", borderTop: `1px solid ${step.color}33`,
-                        fontSize: 11, color: "#94a3b8", lineHeight: 1.5, textAlign: "left",
-                      }}>
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ overflow: "hidden" }}>
+                      <div style={{ marginTop: 8, padding: "8px 4px", borderTop: `1px solid #e2e8f0`, fontSize: 11, color: "#475569", lineHeight: 1.5, textAlign: "left" }}>
                         {step.detail}
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
-              {/* Arrow connector */}
               {i < PIPELINE_STEPS.length - 1 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: i * 0.06 + 0.03 }}
-                  style={{ display: "flex", alignItems: "center", padding: "0 2px" }}
-                >
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.05 + 0.03 }} style={{ display: "flex", alignItems: "center", padding: "0 2px" }}>
                   <svg width="20" height="12" viewBox="0 0 20 12">
-                    <path d="M0 6 L14 6 M10 2 L16 6 L10 10" fill="none"
-                      stroke={step.color + "66"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M0 6 L14 6 M10 2 L16 6 L10 10" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </motion.div>
               )}
@@ -458,21 +348,14 @@ function PipelineSection() {
         })}
       </div>
 
-      {/* User confirmation highlight */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        style={{
-          marginTop: 20, padding: "12px 16px", borderRadius: 10,
-          border: "1px solid rgba(99,102,241,0.3)",
-          background: "rgba(99,102,241,0.08)",
-          display: "flex", alignItems: "center", gap: 10,
-        }}
-      >
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} style={{
+        marginTop: 20, padding: "12px 16px", borderRadius: 10,
+        border: "1px solid #c7d2fe", background: "#eef2ff",
+        display: "flex", alignItems: "center", gap: 10,
+      }}>
         <span style={{ fontSize: 18 }}>{"\uD83D\uDCA1"}</span>
-        <span style={{ fontSize: 12, color: "#94a3b8", lineHeight: 1.5 }}>
-          \u6b65\u9aa4 8\u300c\u7528\u6237\u786e\u8ba4\u300d\u4ec5\u5728\u6743\u9650\u6a21\u5f0f\u5224\u65ad\u4e3a\u9700\u8981\u786e\u8ba4\u65f6\u89e6\u53d1\u3002Bypass \u6a21\u5f0f\u4f1a\u8df3\u8fc7\u6b64\u6b65\u9aa4\u76f4\u63a5\u6267\u884c\u3002
+        <span style={{ fontSize: 12, color: "#475569", lineHeight: 1.5 }}>
+          步骤 8「用户确认」仅在权限模式判断为需要确认时触发。Bypass 模式会跳过此步骤直接执行。
         </span>
       </motion.div>
     </motion.div>
@@ -483,17 +366,17 @@ function PipelineSection() {
 
 function AttacksSection() {
   const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
-  const severityLabels: Record<string, { text: string; bg: string; color: string }> = {
-    high: { text: "\u9ad8\u5371", bg: "rgba(239,68,68,0.15)", color: "#ef4444" },
-    medium: { text: "\u4e2d\u5371", bg: "rgba(245,158,11,0.15)", color: "#f59e0b" },
-    low: { text: "\u4f4e\u5371", bg: "rgba(148,163,184,0.12)", color: "#94a3b8" },
+  const severityLabels: Record<string, { text: string; bg: string; color: string; border: string }> = {
+    high: { text: "高危", bg: "#fef2f2", color: "#dc2626", border: "#fecaca" },
+    medium: { text: "中危", bg: "#fffbeb", color: "#d97706", border: "#fde68a" },
+    low: { text: "低危", bg: "#f8fafc", color: "#94a3b8", border: "#e2e8f0" },
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}>
       <div style={{ textAlign: "center", marginBottom: 20 }}>
-        <p style={{ fontSize: 14, color: "#94a3b8", maxWidth: 550, margin: "0 auto" }}>
-          \u4e3b\u8981\u653b\u51fb\u5411\u91cf\u53ca Claude Code \u7684\u9632\u5fa1\u63aa\u65bd\u5206\u6790\u3002
+        <p style={{ fontSize: 14, color: "#475569", maxWidth: 550, margin: "0 auto" }}>
+          主要攻击向量及 Claude Code 的防御措施分析。
         </p>
       </div>
 
@@ -504,71 +387,43 @@ function AttacksSection() {
           return (
             <motion.div
               key={atk.nameEn}
-              initial={{ opacity: 0, x: -16 }}
+              initial={{ opacity: 0, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.08, duration: 0.35 }}
+              transition={{ delay: i * 0.06, duration: 0.3 }}
               onClick={() => setExpandedIdx(isExpanded ? null : i)}
               style={{
                 padding: "14px 18px", borderRadius: 14, cursor: "pointer",
-                border: `1.5px solid ${isExpanded ? atk.color + "66" : "rgba(148,163,184,0.1)"}`,
-                background: isExpanded
-                  ? `linear-gradient(135deg, ${atk.color}10, rgba(30,32,44,0.9))`
-                  : "linear-gradient(135deg, rgba(30,32,44,0.9), rgba(22,24,34,0.95))",
+                borderLeft: `4px solid ${atk.color}`,
+                border: `1px solid ${isExpanded ? "#cbd5e1" : "#e2e8f0"}`,
+                borderLeftWidth: 4, borderLeftColor: atk.color,
+                background: "#ffffff",
                 transition: "all 0.25s",
-                boxShadow: isExpanded ? `0 0 20px ${atk.color}15` : "none",
+                boxShadow: isExpanded ? "0 2px 8px rgba(0,0,0,0.08)" : "0 1px 3px rgba(0,0,0,0.06)",
               }}
             >
-              {/* Header */}
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <span style={{ fontSize: 22 }}>{atk.icon}</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-                    <span style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0" }}>{atk.name}</span>
-                    <span style={{ fontSize: 11, color: "#64748b", fontFamily: "'Fira Code', monospace" }}>
-                      {atk.nameEn}
-                    </span>
-                    <span style={{
-                      fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 6,
-                      background: sev.bg, color: sev.color,
-                    }}>
-                      {sev.text}
-                    </span>
+                    <span style={{ fontSize: 15, fontWeight: 700, color: "#0f172a" }}>{atk.name}</span>
+                    <span style={{ fontSize: 11, color: "#94a3b8", fontFamily: "'JetBrains Mono', monospace" }}>{atk.nameEn}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 6, background: sev.bg, color: sev.color, border: `1px solid ${sev.border}` }}>{sev.text}</span>
                   </div>
-                  <p style={{ fontSize: 12, color: "#64748b", margin: "4px 0 0", lineHeight: 1.5 }}>
-                    {atk.description}
-                  </p>
+                  <p style={{ fontSize: 12, color: "#475569", margin: "4px 0 0", lineHeight: 1.5 }}>{atk.description}</p>
                 </div>
-                <motion.svg
-                  width="16" height="16" viewBox="0 0 16 16" fill="none"
-animate={{ rotate: isExpanded ? 180 : 0 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <path d="M4 6L8 10L12 6" stroke="#64748b" strokeWidth="2" strokeLinecap="round" />
+                <motion.svg width="16" height="16" viewBox="0 0 16 16" fill="none" animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                  <path d="M4 6L8 10L12 6" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
                 </motion.svg>
               </div>
-
-              {/* Defense measures */}
               <AnimatePresence>
                 {isExpanded && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    style={{ overflow: "hidden" }}
-                  >
-                    <div style={{
-                      marginTop: 12, paddingTop: 12,
-                      borderTop: `1px solid ${atk.color}22`,
-                    }}>
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} style={{ overflow: "hidden" }}>
+                    <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #e2e8f0" }}>
                       <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                         <span style={{ fontSize: 14 }}>{"\uD83D\uDEE1\uFE0F"}</span>
                         <div>
-                          <div style={{ fontSize: 12, fontWeight: 700, color: "#10b981", marginBottom: 4 }}>
-                            \u9632\u5fa1\u63aa\u65bd
-                          </div>
-                          <p style={{ fontSize: 13, color: "#94a3b8", lineHeight: 1.6, margin: 0 }}>
-                            {atk.defense}
-                          </p>
+                          <div style={{ fontSize: 12, fontWeight: 700, color: "#059669", marginBottom: 4 }}>防御措施</div>
+                          <p style={{ fontSize: 13, color: "#475569", lineHeight: 1.6, margin: 0 }}>{atk.defense}</p>
                         </div>
                       </div>
                     </div>
@@ -587,10 +442,10 @@ animate={{ rotate: isExpanded ? 180 : 0 }}
 
 function PracticesSection() {
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}>
       <div style={{ textAlign: "center", marginBottom: 20 }}>
-        <p style={{ fontSize: 14, color: "#94a3b8", maxWidth: 550, margin: "0 auto" }}>
-          \u9075\u5faa\u4ee5\u4e0b\u5b89\u5168\u6700\u4f73\u5b9e\u8df5\uff0c\u6700\u5927\u5316 Claude Code \u7684\u5b89\u5168\u6027\u3002
+        <p style={{ fontSize: 14, color: "#475569", maxWidth: 550, margin: "0 auto" }}>
+          遵循以下安全最佳实践，最大化 Claude Code 的安全性。
         </p>
       </div>
 
@@ -598,22 +453,20 @@ function PracticesSection() {
         {BEST_PRACTICES.map((bp, i) => (
           <motion.div
             key={bp.title}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.08, duration: 0.35 }}
+            transition={{ delay: i * 0.06, duration: 0.3 }}
             style={{
               padding: "18px 20px", borderRadius: 14,
-              border: "1px solid rgba(148,163,184,0.1)",
-              background: "linear-gradient(135deg, rgba(30,32,44,0.9), rgba(22,24,34,0.95))",
+              border: "1px solid #e2e8f0", background: "#ffffff",
+              boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06)",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
               <span style={{ fontSize: 24 }}>{bp.icon}</span>
-              <span style={{ fontSize: 15, fontWeight: 700, color: "#e2e8f0" }}>{bp.title}</span>
+              <span style={{ fontSize: 15, fontWeight: 700, color: "#0f172a" }}>{bp.title}</span>
             </div>
-            <p style={{ fontSize: 13, color: "#94a3b8", lineHeight: 1.6, margin: 0 }}>
-              {bp.description}
-            </p>
+            <p style={{ fontSize: 13, color: "#475569", lineHeight: 1.6, margin: 0 }}>{bp.description}</p>
           </motion.div>
         ))}
       </div>
@@ -630,30 +483,23 @@ export default function SecurityModel() {
 
   return (
     <section id="security-model" style={{ padding: "80px 20px", maxWidth: 900, margin: "0 auto" }}>
-      {/* Heading */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.4 }}
         style={{ textAlign: "center", marginBottom: 40 }}
       >
-        <h2 style={{
-          fontSize: 36, fontWeight: 800, marginBottom: 12,
-          background: "linear-gradient(135deg, #fca5a5, #c4b5fd)",
-          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-        }}>
-          \uD83D\uDEE1\uFE0F \u5b89\u5168\u6a21\u578b\u6df1\u5ea6\u89e3\u6790
+        <h2 style={{ fontSize: 36, fontWeight: 800, marginBottom: 12, color: "#0f172a" }}>
+          {"\uD83D\uDEE1\uFE0F"} 安全模型深度解析
         </h2>
-        <p style={{ color: "#64748b", fontSize: 16, maxWidth: 600, margin: "0 auto" }}>
-          \u6df1\u5165\u5206\u6790 Claude Code \u7684\u591a\u5c42\u5b89\u5168\u67b6\u6784\u3001\u6743\u9650\u63a7\u5236\u673a\u5236\u3001\u653b\u51fb\u9632\u5fa1\u7b56\u7565\u3002
+        <p style={{ color: "#475569", fontSize: 16, maxWidth: 600, margin: "0 auto" }}>
+          深入分析 Claude Code 的多层安全架构、权限控制机制、攻击防御策略。
         </p>
       </motion.div>
 
-      {/* Section navigation */}
       <SectionNav active={activeSection} onChange={setActiveSection} />
 
-      {/* Section content */}
       <AnimatePresence mode="wait">
         {activeSection === "overview" && <OverviewSection key="overview" />}
         {activeSection === "permissions" && <PermissionsSection key="permissions" />}
@@ -662,15 +508,14 @@ export default function SecurityModel() {
         {activeSection === "practices" && <PracticesSection key="practices" />}
       </AnimatePresence>
 
-      {/* Footer note */}
       <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.4 }}
-        style={{ textAlign: "center", fontSize: 12, color: "#475569", marginTop: 40 }}
+        transition={{ delay: 0.3 }}
+        style={{ textAlign: "center", fontSize: 12, color: "#94a3b8", marginTop: 40 }}
       >
-        \u5b89\u5168\u6a21\u578b\u5206\u6790\u57fa\u4e8e Claude Code CLI \u5f00\u6e90\u4ee3\u7801 \u00b7 \u5b89\u5168\u5efa\u8bae\u4ec5\u4f9b\u53c2\u8003
+        安全模型分析基于 Claude Code CLI 开源代码 · 安全建议仅供参考
       </motion.p>
     </section>
   );
