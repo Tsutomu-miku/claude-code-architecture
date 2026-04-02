@@ -20,7 +20,8 @@ interface LayerData {
   files: FileInfo[];
   gradient: string;
   accentColor: string;
-  bgTint: string;
+  lightBg: string;
+  borderColor: string;
 }
 
 /* ------------------------------------------------------------------ */
@@ -36,9 +37,10 @@ const layers: LayerData[] = [
     summary: "\u89e3\u6790 CLI \u53c2\u6570\u3001\u521d\u59cb\u5316\u7ec8\u7aef UI\u3001\u7ba1\u7406 50+ slash \u547d\u4ee4",
     description:
       "\u5165\u53e3\u5c42\u662f\u7528\u6237\u4e0e Claude Code \u4ea4\u4e92\u7684\u7b2c\u4e00\u7ad9\u3002\u5b83\u8d1f\u8d23\u89e3\u6790 CLI \u53c2\u6570\u3001\u521d\u59cb\u5316\u8fd0\u884c\u73af\u5883\u3001\u6e32\u67d3\u7ec8\u7aef UI\uff0c\u5e76\u7ba1\u7406 50+ \u4e2a slash \u547d\u4ee4\u3002\u8fd9\u4e00\u5c42\u5c06\u7528\u6237\u610f\u56fe\u7ffb\u8bd1\u4e3a\u7cfb\u7edf\u5185\u90e8\u53ef\u6267\u884c\u7684\u64cd\u4f5c\u3002",
-    gradient: "linear-gradient(to right, #3b82f6, #06b6d4)",
-    accentColor: "#60a5fa",
-    bgTint: "rgba(59,130,246,0.05)",
+    gradient: "linear-gradient(to right, #60a5fa, #38bdf8)",
+    accentColor: "#3b82f6",
+    lightBg: "#eff6ff",
+    borderColor: "#bfdbfe",
     files: [
       {
         name: "cli.ts",
@@ -70,9 +72,10 @@ const layers: LayerData[] = [
     summary: "\u7ba1\u7406 Claude API \u4ea4\u4e92\u5faa\u73af\u3001\u6d41\u5f0f\u54cd\u5e94\u4e0e Token \u7edf\u8ba1",
     description:
       "\u4f1a\u8bdd\u5c42\u662f\u6574\u4e2a\u7cfb\u7edf\u7684\u300c\u5927\u8111\u300d\uff0c\u8d1f\u8d23\u7ba1\u7406\u4e0e Claude API \u7684\u4ea4\u4e92\u5faa\u73af\u3002\u5b83\u5904\u7406\u6d88\u606f\u7684\u6784\u5efa\u3001\u6d41\u5f0f\u54cd\u5e94\u7684\u63a5\u6536\u4e0e\u89e3\u6790\u3001\u5de5\u5177\u8c03\u7528\u7684\u7f16\u6392\u3001Token \u6d88\u8017\u7684\u7edf\u8ba1\u3002\u8fd9\u4e00\u5c42\u5b9e\u73b0\u4e86 Claude Code \u6700\u6838\u5fc3\u7684 AI \u5bf9\u8bdd\u80fd\u529b\u3002",
-    gradient: "linear-gradient(to right, #8b5cf6, #a855f7)",
-    accentColor: "#a78bfa",
-    bgTint: "rgba(139,92,246,0.05)",
+    gradient: "linear-gradient(to right, #a78bfa, #c084fc)",
+    accentColor: "#7c3aed",
+    lightBg: "#f5f3ff",
+    borderColor: "#ddd6fe",
     files: [
       {
         name: "query.ts (68KB)",
@@ -104,9 +107,10 @@ const layers: LayerData[] = [
     summary: "40+ \u5185\u7f6e\u5de5\u5177 + \u52a8\u6001 MCP \u5de5\u5177\uff0c\u6807\u51c6\u5316 Schema \u4e0e\u5e76\u53d1\u8c03\u5ea6",
     description:
       "\u5de5\u5177\u4efb\u52a1\u5c42\u662f Claude Code \u7684\u300c\u624b\u811a\u300d\uff0c\u63d0\u4f9b\u4e86 40+ \u4e2a\u5185\u7f6e\u5de5\u5177\u548c\u52a8\u6001 MCP \u5de5\u5177\u3002\u6bcf\u4e2a\u5de5\u5177\u90fd\u6709\u6807\u51c6\u5316\u7684\u8f93\u5165 Schema(Zod v4)\u3001\u6743\u9650\u68c0\u67e5\u3001\u6267\u884c\u903b\u8f91\u548c\u7ed3\u679c\u683c\u5f0f\u5316\u3002TaskRunner \u7ba1\u7406\u591a\u5de5\u5177\u7684\u5e76\u53d1\u6267\u884c\u548c\u4f18\u5148\u7ea7\u8c03\u5ea6\u3002",
-    gradient: "linear-gradient(to right, #f59e0b, #f97316)",
-    accentColor: "#fbbf24",
-    bgTint: "rgba(245,158,11,0.05)",
+    gradient: "linear-gradient(to right, #fbbf24, #f59e0b)",
+    accentColor: "#d97706",
+    lightBg: "#fffbeb",
+    borderColor: "#fde68a",
     files: [
       {
         name: "Tool.ts (29KB)",
@@ -148,9 +152,10 @@ const layers: LayerData[] = [
     summary: "API \u901a\u4fe1\u3001\u8ba4\u8bc1\u6388\u6743\u3001MCP \u534f\u8bae\u3001\u529f\u80fd\u5f00\u5173\u3001\u53ef\u89c2\u6d4b\u6027",
     description:
       "\u57fa\u7840\u8bbe\u65bd\u5c42\u63d0\u4f9b\u6240\u6709\u4e0a\u5c42\u6a21\u5757\u4f9d\u8d56\u7684\u57fa\u7840\u670d\u52a1\u3002\u5305\u62ec API \u901a\u4fe1\u3001\u8ba4\u8bc1\u6388\u6743\u3001MCP \u534f\u8bae\u3001\u529f\u80fd\u5f00\u5173\u3001\u53ef\u89c2\u6d4b\u6027\u7b49\u6838\u5fc3\u80fd\u529b\u3002\u8fd9\u4e9b\u670d\u52a1\u4ee5\u5355\u4f8b\u6a21\u5f0f\u8fd0\u884c\uff0c\u901a\u8fc7\u5ef6\u8fdf\u521d\u59cb\u5316\u4f18\u5316\u542f\u52a8\u6027\u80fd\u3002",
-    gradient: "linear-gradient(to right, #10b981, #14b8a6)",
-    accentColor: "#34d399",
-    bgTint: "rgba(16,185,129,0.05)",
+    gradient: "linear-gradient(to right, #34d399, #2dd4bf)",
+    accentColor: "#059669",
+    lightBg: "#ecfdf5",
+    borderColor: "#a7f3d0",
     files: [
       {
         name: "services/claude.ts",
@@ -197,27 +202,28 @@ function FileCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.06 * index, duration: 0.35, ease: "easeOut" }}
       style={{
-        background: "rgba(255,255,255,0.02)",
-        border: "1px solid rgba(255,255,255,0.06)",
-        borderRadius: "12px",
+        background: "#ffffff",
+        border: "1px solid #e2e8f0",
+        borderLeft: `4px solid ${accentColor}`,
+        borderRadius: "10px",
         padding: "16px",
-        transition: "background 0.2s ease",
+        transition: "box-shadow 0.2s ease",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.background =
-          "rgba(255,255,255,0.04)";
+        (e.currentTarget as HTMLElement).style.boxShadow =
+          "0 4px 12px rgba(0,0,0,0.08)";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.background =
-          "rgba(255,255,255,0.02)";
+        (e.currentTarget as HTMLElement).style.boxShadow =
+          "0 1px 3px rgba(0,0,0,0.04)";
       }}
     >
       <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
-        {/* file icon dot */}
         <span
           style={{
             marginTop: "6px",
@@ -246,7 +252,7 @@ function FileCard({
               marginTop: "4px",
               fontSize: "0.875rem",
               lineHeight: 1.6,
-              color: "#94a3b8",
+              color: "#475569",
               margin: "4px 0 0 0",
             }}
           >
@@ -258,7 +264,7 @@ function FileCard({
   );
 }
 
-/** Animated dashed arrow connecting two layers */
+/** Static dashed connector between two layers */
 function LayerConnector() {
   return (
     <div
@@ -270,53 +276,35 @@ function LayerConnector() {
         userSelect: "none",
       }}
     >
-      <motion.div
+      <div
         style={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           gap: "2px",
         }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
       >
-        {/* dashed line segments */}
         {[0, 1, 2].map((i) => (
-          <motion.div
+          <div
             key={i}
             style={{
               height: "6px",
-              width: "1px",
-              background: "rgba(107,114,128,0.6)",
-            }}
-            animate={{ opacity: [0.3, 0.9, 0.3] }}
-            transition={{
-              duration: 1.6,
-              repeat: Infinity,
-              delay: i * 0.3,
-              ease: "easeInOut",
+              width: "2px",
+              background: "#cbd5e1",
+              borderRadius: "1px",
             }}
           />
         ))}
-        {/* arrow head */}
-        <motion.span
+        <span
           style={{
-            color: "rgba(107,114,128,1)",
+            color: "#94a3b8",
             fontSize: "0.75rem",
             lineHeight: 1,
           }}
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{
-            duration: 1.6,
-            repeat: Infinity,
-            delay: 0.9,
-            ease: "easeInOut",
-          }}
         >
           &#9660;
-        </motion.span>
-      </motion.div>
+        </span>
+      </div>
     </div>
   );
 }
@@ -328,7 +316,7 @@ function Chevron({ open }: { open: boolean }) {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor"
-      style={{ height: "20px", width: "20px", color: "#9ca3af" }}
+      style={{ height: "20px", width: "20px", color: "#94a3b8" }}
       animate={{ rotate: open ? 180 : 0 }}
       transition={{ duration: 0.25 }}
     >
@@ -360,13 +348,13 @@ function LayerCard({
       style={{
         position: "relative",
         overflow: "hidden",
-        borderRadius: "16px",
-        border: "1px solid rgba(255,255,255,0.08)",
-        background: layer.bgTint,
-        backdropFilter: "blur(8px)",
+        borderRadius: "14px",
+        border: "1px solid #e2e8f0",
+        background: "#ffffff",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
         marginBottom: "0px",
       }}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -399,7 +387,7 @@ function LayerCard({
           background: "none",
           border: "none",
           outline: "none",
-          borderRadius: "16px",
+          borderRadius: "14px",
         }}
       >
         <div
@@ -410,7 +398,6 @@ function LayerCard({
             minWidth: 0,
           }}
         >
-          {/* icon */}
           <span
             style={{
               fontSize: "2rem",
@@ -423,7 +410,6 @@ function LayerCard({
           </span>
 
           <div style={{ minWidth: 0 }}>
-            {/* title row */}
             <div
               style={{
                 display: "flex",
@@ -436,7 +422,7 @@ function LayerCard({
                 style={{
                   fontSize: "1.25rem",
                   fontWeight: 700,
-                  color: "#f1f5f9",
+                  color: "#0f172a",
                   margin: 0,
                 }}
               >
@@ -451,7 +437,6 @@ function LayerCard({
                 ({layer.subtitle})
               </span>
             </div>
-            {/* one-line summary */}
             <p
               style={{
                 marginTop: "2px",
@@ -469,7 +454,6 @@ function LayerCard({
           </div>
         </div>
 
-        {/* right side: file count + chevron */}
         <div
           style={{
             display: "flex",
@@ -487,7 +471,8 @@ function LayerCard({
               fontSize: "0.75rem",
               fontWeight: 500,
               color: layer.accentColor,
-              background: "rgba(255,255,255,0.06)",
+              background: layer.lightBg,
+              border: `1px solid ${layer.borderColor}`,
             }}
           >
             {layer.files.length} \u9879
@@ -515,21 +500,22 @@ function LayerCard({
                 gap: "20px",
               }}
             >
-              {/* full description */}
               <p
                 style={{
                   fontSize: "0.875rem",
                   lineHeight: 1.6,
-                  color: "#cbd5e1",
-                  borderLeft: "2px solid rgba(255,255,255,0.1)",
+                  color: "#475569",
+                  borderLeft: `3px solid ${layer.borderColor}`,
                   paddingLeft: "16px",
                   margin: 0,
+                  background: layer.lightBg,
+                  borderRadius: "0 8px 8px 0",
+                  padding: "12px 16px",
                 }}
               >
                 {layer.description}
               </p>
 
-              {/* file cards grid */}
               <div
                 style={{
                   display: "grid",
@@ -560,7 +546,6 @@ function LayerCard({
 /* ------------------------------------------------------------------ */
 
 export default function Architecture() {
-  // first layer expanded by default
   const [openIds, setOpenIds] = useState<Set<string>>(
     () => new Set([layers[0].id]),
   );
@@ -586,10 +571,9 @@ export default function Architecture() {
         padding: "96px 16px",
       }}
     >
-      {/* Section heading */}
       <motion.div
         style={{ marginBottom: "56px", textAlign: "center" }}
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
@@ -600,7 +584,7 @@ export default function Architecture() {
             fontSize: "2rem",
             fontWeight: 800,
             letterSpacing: "-0.025em",
-            color: "#f1f5f9",
+            color: "#0f172a",
             margin: 0,
           }}
         >
@@ -611,7 +595,7 @@ export default function Architecture() {
           style={{
             marginTop: "12px",
             fontSize: "1rem",
-            color: "#94a3b8",
+            color: "#64748b",
             maxWidth: "42rem",
             marginLeft: "auto",
             marginRight: "auto",
@@ -622,7 +606,6 @@ export default function Architecture() {
         </p>
       </motion.div>
 
-      {/* Layer stack */}
       <div style={{ display: "flex", flexDirection: "column" }}>
         {layers.map((layer, idx) => (
           <div key={layer.id}>
@@ -636,13 +619,12 @@ export default function Architecture() {
         ))}
       </div>
 
-      {/* bottom note */}
       <motion.p
         style={{
           marginTop: "40px",
           textAlign: "center",
           fontSize: "0.75rem",
-          color: "#64748b",
+          color: "#94a3b8",
         }}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
