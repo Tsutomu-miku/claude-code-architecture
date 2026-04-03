@@ -29,9 +29,9 @@ function highlightCode(code: string): string {
         /\b(string|number|boolean|void|any|never|unknown|Promise|Record|Map|Set|Array|Object|Error)\b/g,
         '<span style="color:#7c3aed">$1</span>'
       )
-      // Numbers
+      // Numbers (only match numbers not inside HTML tags)
       result = result.replace(
-        /\b(\d+\.?\d*)\b/g,
+        /(?<![;:"\w#])(\b\d+\.?\d*\b)(?![0-9a-fA-F]*[";>])/g,
         '<span style="color:#3b82f6">$1</span>'
       )
       // Function calls
@@ -220,7 +220,7 @@ if (gb.isOn('proactive-suggestions')) {
     title: 'Fail-Closed 安全模式',
     summary: 'buildTool() 默认 isConcurrencySafe=false, isReadOnly=false，未声明即拒绝。',
     description:
-      'Fail-Closed（默认拒绝）是 Claude Code 安全模型的基石原则。在工具系统中体现为：所有安全相关的属性都默认为“不安全”状态——isConcurrencySafe 默认 false、isReadOnly 默认 false、isDestructive 默认 true。工具开发者必须显式声明安全属性才能获得更宽松的权限。权限系统同样遵循此原则——未知的权限请求默认拒绝，超时未响应的确认对话框默认拒绝。',
+      'Fail-Closed（默认拒绝）是 Claude Code 安全模型的基石原则。在工具系统中体现为：所有安全相关的属性都默认为"不安全"状态——isConcurrencySafe 默认 false、isReadOnly 默认 false、isDestructive 默认 true。工具开发者必须显式声明安全属性才能获得更宽松的权限。权限系统同样遵循此原则——未知的权限请求默认拒绝，超时未响应的确认对话框默认拒绝。',
     code: `// Tool.ts — Fail-Closed 默认值
 interface ToolMetadata {
   isReadOnly: boolean      // 默认 false → 视为写操作
@@ -341,7 +341,7 @@ if (__FEATURE_VOICE__) {
 }`,
   },
   {
-    emoji: '⚡',
+    emoji: '\u26A1',
     category: '性能',
     categoryColor: '#059669',
     categoryBg: '#ecfdf5',
@@ -523,7 +523,7 @@ function PatternCard({ pattern, index }: { pattern: PatternData; index: number }
         color: '#94a3b8',
         fontFamily: "'JetBrains Mono', monospace",
       }}>
-        {expanded ? '▾ 收起详情' : '▸ 点击展开详情与伪代码'}
+        {expanded ? '\u25BE 收起详情' : '\u25B8 点击展开详情与伪代码'}
       </div>
 
       {/* Expanded details */}

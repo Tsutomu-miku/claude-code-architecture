@@ -466,7 +466,7 @@ function PanoramaLayer({
         border: `1px solid ${layer.borderColor}`,
         borderRadius: RADIUS,
         padding: "20px 20px 16px",
-        overflow: "hidden",
+        overflow: "visible",
       }}
     >
       <div
@@ -865,7 +865,7 @@ function TurnArrow() {
 
 function DataFlowPanorama() {
   return (
-    <div>
+    <div style={{ paddingBottom: 24 }}>
       <div className="globalarch-flow-desktop">
         <div
           style={{
@@ -1005,7 +1005,7 @@ function MobileFlowNode({ node }: { node: FlowNode }) {
               color: C.dim,
               lineHeight: 1.6,
               marginTop: 6,
-              overflow: "hidden",
+              overflow: "visible",
             }}
           >
             {node.desc}
@@ -1248,7 +1248,7 @@ function useResponsiveRadii(): {
       n1Size: 56,
       n2Size: 48,
       n3Size: 44,
-      containerH: 470,
+      containerH: 560,
     };
   }
   return {
@@ -1259,7 +1259,7 @@ function useResponsiveRadii(): {
     n1Size: 72,
     n2Size: 60,
     n3Size: 52,
-    containerH: 680,
+    containerH: 800,
   };
 }
 
@@ -1314,8 +1314,8 @@ function ModuleDependencies() {
         style={{
           position: "relative",
           width: "100%",
-          height: containerH,
-          overflow: "hidden",
+          minHeight: containerH,
+          overflow: "visible",
         }}
       >
         <DashedCircle radius={r1} color={C.amberBorder} />
@@ -1501,7 +1501,7 @@ export default function GlobalArch() {
             margin: 0,
           }}
         >
-          {"🗺️ 全局架构总览"}
+          {"\uD83D\uDDFA\uFE0F 全局架构总览"}
         </h2>
         <p
           style={{
